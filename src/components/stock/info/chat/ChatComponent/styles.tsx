@@ -10,6 +10,9 @@ export const Container = styled.div`
     flex-direction: column;
 `;
 
+export const UsersContainer = styled.div`
+`;
+
 export const MessagesContainer = styled.div`
     flex: 1;
     overflow-y: auto;
@@ -19,9 +22,9 @@ export const MessagesContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-export const MessageItem = styled.div<{ isCurrentUser: boolean }>`
+export const MessageItem = styled.div<{ $isCurrentUser: boolean }>`
     display: flex;
-    justify-content: ${props => props.isCurrentUser ? 'flex-end' : 'flex-start'};
+    justify-content: ${props => props.$isCurrentUser ? 'flex-end' : 'flex-start'};
     margin-bottom: 10px;
 `;
 
@@ -30,7 +33,9 @@ export const MessageContent = styled.div`
     padding: 10px 15px;
     border-radius: 8px;
     max-width: 70%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 `;
+
 
 export const SenderName = styled.div`
     font-weight: bold;
@@ -40,7 +45,12 @@ export const SenderName = styled.div`
 
 export const MessageText = styled.div`
     margin: 5px 0;
+    word-break: break-word; // 긴 메시지 처리
+    color: #333;           // 메시지 텍스트 색상
+    font-size: 1rem;      // 메시지 텍스트 크기
+    line-height: 1.5;     // 줄 간격
 `;
+
 
 export const MessageTime = styled.div`
     font-size: 0.8em;

@@ -1,4 +1,3 @@
-// src/hooks/useSocket.ts
 import { useState, useEffect, useCallback } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
@@ -19,27 +18,26 @@ export function useSocket(): UseSocketReturn {
     const [connectedUsers, setConnectedUsers] = useState<string[]>([]);
 
     useEffect(() => {
+        // STOMP 클라이언트 설정
         const client = new Client({
+            // WebSocket 연결 설정
             webSocketFactory: () => new SockJS(`${import.meta.env.VITE_WS_URL}/ws-stocktide`),
-            heartbeatIncoming: 4000,
-            heartbeatOutgoing: 4000,
-            reconnectDelay: 5000,
+            // 하트비트 설정
+            heartbeatIncoming: 4000, // 서버로부터 4초마다 하트비트 수신 기대
+            heartbeatOutgoing: 4000, // 4초마다 서버로 하트비트 전송
+            reconnectDelay: 5000, // 연결이 끊어졌을 때 5초 후 재연결 시도
             debug: (str) => {
                 console.log(str);
             },
+
+            // 연결 성공 시 콜백
             onConnect: () => {
                 console.log('WebSocket Connected');
-
                 if (client.connected) {
-                    // 메시지 구독
-                    client.subscribe('/topic/public', (message) => {
-                        const newMessage = JSON.parse(message.body);
-                        setMessages(prev => [...prev, newMessage]);
-                    });
-
                     // 접속자 목록 구독
                     client.subscribe('/topic/users', (message) => {
                         const statusUpdate = JSON.parse(message.body);
+                        console.log('Users update received:', statusUpdate);
                         setConnectedUsers(statusUpdate.connectedUsers);
 
                         if (statusUpdate.type === 'CONNECTED') {
@@ -48,6 +46,19 @@ export function useSocket(): UseSocketReturn {
                             toast.info(`${statusUpdate.username} left the chat`);
                         }
                     });
+
+                    // 메시지 구독
+                    client.subscribe('/topic/public', (message) => {
+                        const newMessage = JSON.parse(message.body);
+                        // console.log('Received new message:', newMessage);
+
+                        setMessages(prev => {
+                            const updated = [...prev, newMessage];
+                            // console.log('Updated messages:', updated);
+                            return updated;
+                        });
+                    });
+
                 }
             },
             onDisconnect: () => {
@@ -67,7 +78,7 @@ export function useSocket(): UseSocketReturn {
         }
 
         return () => {
-            client.deactivate();
+            client.deactivate().then();
         };
     }, []);
 
