@@ -7,25 +7,25 @@ function useCustomMove() {
     const navigate = useNavigate()
 
     //같은 페이지를 다시 호출했을 시 리스트를 다시 로드하기 위해서
-    const[refresh, setRefresh] = useState(false)
+    const[refresh, setRefresh] = useState<boolean>(false)
 
     //넘어오는 페이지 설정값으로 list로 이동
     const moveToList = () => {
         setRefresh(!refresh)
-        navigate({pathname: '/stock/items/entire'})
+        navigate({pathname: '/stock/domestic/item/entire'})
     }
 
-    const moveToModify = (num) => {
-        navigate({pathname:`/stock/article/modify/${num}`})
+    const moveToModify = (num: number) => {
+        navigate({pathname:`/stock/domestic/detail/modify/${num}`})
 
     }
 
     const moveToMemberModify = () => {
-        navigate({pathname:`/mypage/modify/`})
+        navigate({pathname:`/my/modify/`})
     }
 
-    const moveToRead = (num) => {
-        navigate({pathname:`/stock/article/read/${num}`})
+    const moveToRead = (num: number) => {
+        navigate({pathname:`/stock/domestic/detail/read/${num}`})
     }
 
     return {moveToList, moveToModify, moveToRead, moveToMemberModify, refresh}

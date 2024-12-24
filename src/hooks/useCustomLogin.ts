@@ -1,17 +1,21 @@
 import {useNavigate} from "react-router-dom";
 import {loginPostAsync, logout} from "@slices/loginSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
+import { AppDispatch, RootState } from '../store.tsx';
+
+interface LoginParam {
+  email: string;
+  password: string;
+}
 
 const useCustomLogin = ( ) => {
-
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-  const loginState = useSelector(state => state.loginSlice)
+  const dispatch = useDispatch<AppDispatch>();
+  const loginState = useSelector((state: RootState) => state.loginSlice);
 
   const isLogin = !!loginState.email //----------로그인 여부
 
-  const doLogin = async (loginParam) => { //----------로그인 함수
+  const doLogin = async (loginParam: LoginParam) => { //----------로그인 함수
     const action = await dispatch(loginPostAsync(loginParam))
     return action.payload
   }
@@ -20,7 +24,7 @@ const useCustomLogin = ( ) => {
     dispatch(logout())
   }
 
-  const moveToPath = (path) => {  //----------------페이지 이동
+  const moveToPath = (path: string) => {  //----------------페이지 이동
     navigate({pathname: path}, {replace:true})
   }
 

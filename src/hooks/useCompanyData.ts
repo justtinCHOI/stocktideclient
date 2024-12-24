@@ -4,10 +4,10 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:8080';
 
 // 커스텀 훅 정의
-function useCompanyData(startCompanyId, endCompanyId) {
+function useCompanyData(startCompanyId: number, endCompanyId: number) {
 
     // 데이터 가져오는 함수
-    const fetchData = async (companyId) => {
+    const fetchData = async (companyId: number) => {
         const url = `${BASE_URL}/api/company/${companyId}`;
         const response = await axios.get(url);
         return response.data;

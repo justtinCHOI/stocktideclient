@@ -1,18 +1,19 @@
-import {Outlet} from "react-router-dom";
+import { FC } from 'react';
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import BasicMenu from "@components/common/BasicMenu.jsx";
-import RapidSlider from '@components/common/RapidSliderInfo/RapidSlider.tsx';
+import BasicMenu from "@components/common/BasicMenu";
+import RapidSlider from '@components/common/RapidSliderInfo/RapidSlider';
 
-const BasicLayout = () => {
-    return (
-        <Container>
-            <MainContent>
-                <Outlet/>
-            </MainContent>
-            <RapidSlider/>
-            <BasicMenu/>
-        </Container>
-    );
+const BasicLayout: FC = () => {
+  return (
+    <Container>
+      <MainContent>
+        <Outlet/>
+      </MainContent>
+      <RapidSlider/>
+      <BasicMenu/>
+    </Container>
+  );
 }
 
 const Container = styled.div`
