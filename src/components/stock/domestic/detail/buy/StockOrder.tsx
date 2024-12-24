@@ -30,8 +30,6 @@ const toastText = "요청이 완료되었습니다";
 
 const StockOrder = ({ corpName }) => {
 
-
-
     const dispatch = useDispatch();
     const orderType = useSelector((state) => state.stockOrderTypeSlice);
     const orderPrice = useSelector((state) => state.stockOrderPriceSlice);

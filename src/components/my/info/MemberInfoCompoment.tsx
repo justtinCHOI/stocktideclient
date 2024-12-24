@@ -29,7 +29,6 @@ const MemberInfoComponent = () => {
     const {moveToMemberModify} = useCustomMove()
     const [showPassword, setShowPassword] = useState(false)
 
-
     const [member, setMember] = useState(initState)
     const loginInfo = useSelector(state => state.loginSlice)
 

@@ -32,7 +32,7 @@ function generateUniqueNumber() {
     return `${timestamp}-${randomValue}`;
 }
 
-function requestPay() {
+export function requestPay() {
 
     if (!IMP) {
         console.error('IMP not initialized');

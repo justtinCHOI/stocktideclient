@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { ContentBottom } from "@assets/css/content";
 import PropTypes from "prop-types";
-import {requestPay} from "@api/paymentApi.js";
+import {requestPay} from "@api/paymentApi.tsx";
 
 
 const initAccountState = {
