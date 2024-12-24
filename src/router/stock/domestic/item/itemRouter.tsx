@@ -2,9 +2,9 @@ import {lazy, Suspense} from "react";
 import {Navigate} from "react-router-dom";
 import {Loading} from "@router/root.tsx";
 
-const EntirePage = lazy(() => import("@pages/stock/domestic/items/EntirePage.tsx"));
-const HoldPage = lazy(() => import("@pages/stock/domestic/items/HoldPage.tsx"));
-const WatchPage = lazy(() => import("@pages/stock/domestic/items/WatchPage.tsx"));
+const EntirePage = lazy(() => import("@pages/stock/domestic/item/entire/Entire.tsx"));
+const HoldPage = lazy(() => import("@pages/stock/domestic/item/hold/Hold.tsx"));
+const WatchPage = lazy(() => import("@pages/stock/domestic/item/watch/Watch.tsx"));
 
 const itemRouter = () => {
     return[

@@ -4,8 +4,8 @@ import {Loading} from "@router/root.tsx";
 
 const memberRouter = () => {
 
-const LoginPage = lazy(() => import("@pages/member/LoginPage.tsx"))
-const KakaoRedirectPage = lazy(() => import("@pages/member/KakaoRedirectPage.tsx"))
+const Login = lazy(() => import("@pages/member/login/Login.tsx"))
+const KakaoRedirect = lazy(() => import("@pages/member/kakao/KakaoRedirect.tsx"))
 
     return [
         {
@@ -13,12 +13,12 @@ const KakaoRedirectPage = lazy(() => import("@pages/member/KakaoRedirectPage.tsx
             element: <Navigate replace={true} to='login' />,
         },
         {
-            path: "login",
-            element: <Suspense fallback={Loading}><LoginPage/></Suspense>
+            path: "logins",
+            element: <Suspense fallback={Loading}><Login/></Suspense>
         },
         {
             path: "kakao",
-            element: <Suspense fallback={Loading}><KakaoRedirectPage/></Suspense>,
+            element: <Suspense fallback={Loading}><KakaoRedirect/></Suspense>,
         },
     ]
 }

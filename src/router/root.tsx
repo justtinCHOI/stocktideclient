@@ -1,10 +1,10 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
-import ErrorBoundary from "@components/ErrorBoundary";
-import ChatComponent from "@components/stock/info/chat/ChatComponent";
+import ErrorBoundary from "@components/ErrorBoundary.tsx";
 import {lazy, Suspense} from "react";
 import stockRouter from "@router/stock/stockRouter.tsx";
 import myPageRouter from "@router/mypage/myPageRouter.tsx";
 import memberRouter from "@router/member/memberRouter.tsx";
+import PrivateRoute from '@components/PrivateRoute.tsx';
 
 export const Loading = (
     <div
@@ -15,10 +15,11 @@ export const Loading = (
 );
 
 const Stock = lazy(() => import("@pages/stock/Stock.tsx"));
-const Home = lazy(() => import("@pages/home/Home.tsx"));
-const MyPage = lazy(() => import("@pages/myPage/MyPage.tsx"));
-const BasicLayout = lazy(() => import("../layouts/BasicLayout.tsx"));
-const MemberPage = lazy(() => import("@pages/member/MemberPage.tsx"));
+const Welcome = lazy(() => import("@pages/welcome/Welcome.tsx"));
+const My = lazy(() => import("@pages/my/My.tsx"));
+const BasicLayout = lazy(() => import("@layouts/BasicLayout.tsx"));
+const Member = lazy(() => import("@pages/member/Member.tsx"));
+const NotFound = lazy(() => import('@pages/NotFound.tsx'));
 
 const root = createBrowserRouter([
     {
@@ -26,33 +27,63 @@ const root = createBrowserRouter([
         element:
             <ErrorBoundary>
                 <Suspense fallback={Loading}>
-                     <ChatComponent />
+                    <BasicLayout/>
                 </Suspense>
             </ErrorBoundary>,
         children: [
             {
                 path: '',
                 element: <Navigate replace to='/home' />,
-            },{
-                path: 'home',
-                element: <Suspense fallback={Loading}><Home /></Suspense>,
-            },{
+            },
+            {
+                path: 'welcome',
+                element: (
+                  <Suspense fallback={Loading}>
+                      <Welcome />
+                  </Suspense>
+                ),
+            },
+            {
                 path: 'stock',
-                element: <Suspense fallback={Loading}><Stock /></Suspense>,
+                element: (
+                  <PrivateRoute>
+                      <Suspense fallback={Loading}>
+                          <Stock />
+                      </Suspense>
+                  </PrivateRoute>
+                ),
                 children: stockRouter()
-            },{
-                path: 'myPage',
-                element: <Suspense fallback={Loading}><MyPage /></Suspense>,
+            },
+            {
+                path: 'my',
+                element: (
+                  <PrivateRoute>
+                      <Suspense fallback={Loading}>
+                          <My />
+                      </Suspense>
+                  </PrivateRoute>
+                ),
                 children: myPageRouter()
-            },{
+            },
+            {
                 path: "member",
-                element: <Suspense fallback={Loading}><MemberPage /></Suspense>,
+                element: (
+                  <Suspense fallback={Loading}>
+                      <Member />
+                  </Suspense>
+                ),
                 children: memberRouter()
-            }
+            },
+            {
+                path: '*', // 모든 경로가 처리되지 않을 경우
+                element: (
+                  <Suspense fallback={Loading}>
+                      <NotFound />
+                  </Suspense>
+                ),
+            },
         ]
     }
-
-
 ]);
 
 export default root;

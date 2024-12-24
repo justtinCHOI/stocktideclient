@@ -2,7 +2,7 @@ import {lazy, Suspense} from "react";
 import {Navigate} from "react-router-dom";
 import {Loading} from "@router/root.tsx";
 
-const SearchListPage = lazy(() => import("@pages/stock/domestic/search/SearchListPage.tsx"));
+const Search = lazy(() => import("@pages/stock/domestic/search/Search.tsx"));
 
 const searchRouter = () => {
     return[
@@ -11,7 +11,7 @@ const searchRouter = () => {
             element: <Navigate replace={true} to='list' />,
         },{
             path: 'list',
-            element: <Suspense fallback={Loading}><SearchListPage/></Suspense>,
+            element: <Suspense fallback={Loading}><Search/></Suspense>,
         },
     ]
 }
