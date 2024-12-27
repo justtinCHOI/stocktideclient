@@ -1,14 +1,20 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const MenuComponent = ({ menus, urls }) => {
-    const [expanded, setExpanded] = useState(false);
-    const [activeMenu, setActiveMenu] = useState(null);
+interface MenuComponentProps {
+    menus: string[];
+    urls: string[];
+}
 
-    const handleMenuClick = (index) => {
+
+const MenuComponent: FC<MenuComponentProps> = ({ menus, urls }) => {
+    const [expanded, setExpanded] = useState(false);
+    const [activeMenu, setActiveMenu] = useState<number | null>(null);
+
+    const handleMenuClick = (index: number) => {
         setActiveMenu(index);
         setExpanded(false);
     };
@@ -96,7 +102,14 @@ const SecondMenuNav = styled.div`
     }
 `;
 
-const SecondMenuSingle = styled.div`
+
+interface StyledMenuProps {
+    $active?: boolean;
+    $expanded?: boolean;
+    $extive?: boolean;
+}
+
+const SecondMenuSingle = styled.div<StyledMenuProps>`
     font-size: 1rem;
     color: #4a5568;
     padding: 8px 16px;

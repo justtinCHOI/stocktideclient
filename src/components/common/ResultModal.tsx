@@ -1,6 +1,14 @@
 import PropTypes from 'prop-types';
+import { FC } from 'react';
 
-function ResultModal({ title, content, callbackFn }) {
+
+interface ResultModalProps {
+    title: string;
+    content: string;
+    callbackFn: () => void;
+}
+
+const ResultModal: FC<ResultModalProps> = ({ title, content, callbackFn }) => {
     return (
         <div className={`fixed top-0 left-0 z-[1055] flex h-full w-full justify-center bg-black bg-opacity-40`}>
             <div className="absolute bg-white shadow dark:bg-gray-700 opacity-100 w-1/4 rounded mt10 mb-10 px-6 min-w-[600px]">

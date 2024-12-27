@@ -1,11 +1,18 @@
 import { styled } from "styled-components";
 import { dummyLogo, logoList } from "@utils/companyLogos.ts"
 
-import PropTypes from "prop-types";
+import { extractedCompanyData2 } from '@typings/hooks';
+import { FC } from 'react';
 
 const volumeText = "거래량";
 
-const StockOverview = ({ stockInfo, stockInfoLoading, stockInfoError }) => {
+interface StockOverviewProps {
+    stockInfo: extractedCompanyData2;
+    stockInfoLoading: boolean;
+    stockInfoError: boolean | null;
+}
+
+const StockOverview: FC<StockOverviewProps> = ({ stockInfo, stockInfoLoading, stockInfoError }) => {
 
     const corpName = stockInfo?.korName;
 
@@ -50,8 +57,11 @@ const StockOverview = ({ stockInfo, stockInfoLoading, stockInfoError }) => {
 
 export default StockOverview;
 
+interface ContainerProps {
+    $priceChangeRate: number;
+}
 
-const Container = styled.div`
+const Container = styled.div<ContainerProps>`
     flex: 7 0 0;
     overflow-x: scroll;
     display: flex;
@@ -101,20 +111,6 @@ const Container = styled.div`
         }
     }
 `;
-
-StockOverview.propTypes = {
-    stockInfo: PropTypes.shape({
-        korName: PropTypes.string,
-        code: PropTypes.string,
-        stockPrice: PropTypes.string,
-        priceChangeRate: PropTypes.string,
-        priceChangeAmount: PropTypes.string,
-        transactionVolume: PropTypes.string,
-        amount: PropTypes.string,
-    }),
-    stockInfoLoading: PropTypes.bool,
-    stockInfoError: PropTypes.bool,
-};
 
 const TransactionVolume = styled.div`
     white-space: nowrap;

@@ -1,6 +1,22 @@
 import PropTypes from 'prop-types';
+import { FC } from 'react';
 
-function PageComponent({ serverData, movePage }) {
+interface ServerData {
+    prev: boolean;
+    next: boolean;
+    prevPage: number;
+    nextPage: number;
+    current: number;
+    pageNumList: number[];
+}
+
+interface PageComponentProps {
+    serverData: ServerData;
+    movePage: (params: { page: number; size: number }) => void;
+}
+
+
+const  PageComponent: FC<PageComponentProps> = ({ serverData, movePage }) => {
     return (
         <div className="m-6 flex justify-center">
             {serverData.prev ? (

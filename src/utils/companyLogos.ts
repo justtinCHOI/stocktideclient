@@ -14,7 +14,11 @@ import LGelec from "@assets/logos/LG전자.svg";
 import LGchem from "@assets/logos/LG화학.svg";
 import posco from "@assets/logos/POSCO홀딩스.svg";
 
-export const logoList = {
+interface LogoMap {
+    [key: string]: string;  // string 인덱스 시그니처 추가
+}
+
+export const logoList: LogoMap = {
     삼성전자: logosamsung,
     POSCO홀딩스: posco,
     셀트리온: celltrion,

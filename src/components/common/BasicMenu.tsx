@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-const BasicMenu = () => {
+import { FC } from 'react';
+const BasicMenu: FC = () => {
     return (
         <Footer>
             <FooterHome><Link to={'/home'}>홈</Link> </FooterHome>

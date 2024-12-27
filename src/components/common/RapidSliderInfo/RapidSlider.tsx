@@ -1,9 +1,10 @@
+import React from 'react';
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import useCompanyData from "@hooks/useCompanyData.ts";
 import StockOverview from "./StockOverview.tsx";
 
-const RapidSlider = () => {
+const RapidSlider: React.FC = () => {
 
     const [sliderIndex, setSliderIndex] = useState(0);
 
@@ -48,7 +49,11 @@ const RapidSliderInfo = styled.div`
     padding : 5px;
 `;
 
-const SliderItem = styled.div`
+interface SliderItemProps {
+    $active: boolean;
+}
+
+const SliderItem = styled.div<SliderItemProps>`
     width : 350px;
     height: 100%;
     display: ${({ $active }) => ($active ? 'block' : 'none')};

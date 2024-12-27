@@ -1,4 +1,6 @@
-const FetchingModal = (  ) => {
+import { FC } from 'react';
+
+const FetchingModal: FC = ( ) => {
   return ( 
     <div 
     className={`fixed top-0 left-0 z-[1055] flex h-full w-full  place-items-center justify-center bg-black bg-opacity-20`}>
