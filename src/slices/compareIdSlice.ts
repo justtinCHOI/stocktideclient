@@ -13,10 +13,10 @@ const compareChartSlice = createSlice({
   name: "compareId",
   initialState: loadInitialState(),
   reducers: {
-    changeCompareId: (state, action) => {
+    changeCompareId: (action) => {
       const newState = action.payload;
       setLocalStorage(LOCAL_STORAGE_KEY, newState, 30); // 30일 동안 유효한 상태로 저장
-      return state;
+      return newState;
     },
   },
 });

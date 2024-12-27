@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginPost } from "@api/memberApi.js";
 import { getLocalStorage, setLocalStorage, removeLocalStorage } from "@utils/localStorageUtil.tsx";
+import { LoginParam } from '@typings/member';
 
 const initState = {
     email: '',
 };
 
-export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
+export const loginPostAsync = createAsyncThunk('loginPostAsync', (param: LoginParam) => {
     return loginPost(param);
 });
 
@@ -22,7 +23,7 @@ const loginSlice = createSlice({
     name: 'LoginSlice',
     initialState: loadMemberLocalStorage() || initState,
     reducers: {
-        login: (state, action) => {
+        login: ( action) => {
             setLocalStorage("member", action.payload, 1);
             console.log("login action.payload.email: ", action.payload.email);
             return action.payload;
@@ -33,7 +34,7 @@ const loginSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginPostAsync.fulfilled, (state, action) => {
+        builder.addCase(loginPostAsync.fulfilled, ( action) => {
             console.log("fulfilled");
             const payload = action.payload;
             if (!payload.error) {

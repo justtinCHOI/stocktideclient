@@ -10,7 +10,7 @@ function Setting() {
             <div className="text-3xl font-extrabold">
                 Todo SettingPage {tno}
             </div>
-            <SettingComponent tno={tno} />
+            <SettingComponent tno={Number(tno)} />
         </div>
     );
 }

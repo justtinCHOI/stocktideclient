@@ -5,7 +5,7 @@ const Charge = () => {
   const {cashId} = useParams()
 
   return (
-    <ChargeComponent cashId={cashId}/>
+    <ChargeComponent cashId={Number(cashId)}/>
   );
 };
 

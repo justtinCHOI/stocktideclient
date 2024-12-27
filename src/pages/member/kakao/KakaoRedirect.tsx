@@ -12,7 +12,7 @@ const KakaoRedirect = () => {
 
     const {moveToPath} = useCustomLogin()
 
-    const authCode = searchParams.get("code")//인증코드
+    const authCode = searchParams.get("code") //인증코드
 
     const dispatch = useDispatch();
 
@@ -20,21 +20,23 @@ const KakaoRedirect = () => {
     //getAccessToken : 인가코드 -> accessToken
     //getMemberWithAccessToken : accessToken -> info
     useEffect(() => {
-        getAccessToken(authCode).then(accessToken => {
-            getMemberWithAccessToken(accessToken).then(memberInfo => {
-            console.log("info : ", memberInfo)
-                dispatch(login(memberInfo))
-                if (memberInfo) {
-                    if (memberInfo.email) {
-                        moveToPath("/");
-                    } else {
-                        if (confirm("일반회원으로 전환하시겠습니까?")) {
-                            moveToPath("/my/modify");
+        if(authCode){
+            getAccessToken(authCode).then(accessToken => {
+                getMemberWithAccessToken(accessToken).then(memberInfo => {
+                    console.log("info : ", memberInfo)
+                    dispatch(login(memberInfo))
+                    if (memberInfo) {
+                        if (memberInfo.email) {
+                            moveToPath("/");
+                        } else {
+                            if (confirm("일반회원으로 전환하시겠습니까?")) {
+                                moveToPath("/my/modify");
+                            }
                         }
                     }
-                }
+                })
             })
-        })
+        }
     }, [authCode])
 
     return (

@@ -10,7 +10,7 @@ function News() {
             <div className="text-3xl font-extrabold">
                 Todo NewsPage {tno}
             </div>
-            <NewsComponent tno={tno}/>
+            <NewsComponent tno={Number(tno)}/>
         </div>
     );
 }

@@ -10,7 +10,7 @@ function Sell() {
             <div className="text-3xl font-extrabold">
                 Todo SellPage {tno}
             </div>
-            <SellComponent tno={tno}t/>
+            <SellComponent tno={Number(tno)}/>
         </div>
     );
 }

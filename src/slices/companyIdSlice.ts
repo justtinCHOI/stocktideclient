@@ -13,7 +13,7 @@ const companyIdSlice = createSlice({
     name: "companyId",
     initialState: loadInitialState(),
     reducers: {
-        changeCompanyId: (state, action) => {
+        changeCompanyId: (action) => {
             const newState = action.payload;
             setLocalStorage(LOCAL_STORAGE_KEY, newState, 30); // 30일 동안 유효한 상태로 저장
             return newState;

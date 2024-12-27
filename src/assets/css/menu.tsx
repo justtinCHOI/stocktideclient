@@ -42,7 +42,11 @@ export const OutletDiv = styled.div`
     height: calc(100vh - 70px); /* Adjust height to be full height minus the menu height */
 `;
 
-export const IncludeInformationDiv = styled.div`
+export interface TopProps {
+  $top: number;
+}
+
+export const IncludeInformationDiv = styled.div<TopProps>`
     position: fixed;
     top: ${({ $top }) => `${$top}rem`}; //* Adjust based on SearchCompanyComponent height */
     width: 100%;

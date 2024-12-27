@@ -12,10 +12,3 @@ export interface ChargeProps {
 export interface ExchangeProps {
   cashId: number;
 }
-
-export interface AccountComponentProps {
-  onSuccess?: () => void;
-  onError?: (error: Error) => void;
-}
-
-
