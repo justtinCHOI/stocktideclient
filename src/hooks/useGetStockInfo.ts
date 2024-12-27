@@ -20,7 +20,7 @@ const useGetStockInfo = (companyId: number) => {
         } else if (0 < minute && minute < 30) {
             const delayTime = (30 - minute) * 60000;
             setTimeout(() => {
-                refetch();
+                refetch().then();
                 setAutoRefetch(true);
             }, delayTime);
         } else if (30 < minute && minute < 60) {

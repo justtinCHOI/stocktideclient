@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 ////useGetStockData : 현재시각에 가장 30분 단위에 패칭을 하고 그후 10분단위로 AXIOS를 호출로 회사 주가 정보 가져오기
 const useGetStockData = (companyId: number) => {

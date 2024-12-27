@@ -1,4 +1,4 @@
-import {API_SERVER_HOST} from "./memberApi";
+const API_SERVER_HOST = import.meta.env.VITE_API_URL;
 import jwtAxios from '@utils/jwtUtil';
 
 const host = `${API_SERVER_HOST}/api/cash`

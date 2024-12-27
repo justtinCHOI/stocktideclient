@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getLocalStorage, setLocalStorage } from "./localStorageUtil.tsx"; // localStorage 유틸리티 파일로 변경
-import { API_SERVER_HOST } from "@api/memberApi.js";
+const API_SERVER_HOST = import.meta.env.VITE_API_URL;
 
 const jwtAxios = axios.create();
 

@@ -1,8 +1,7 @@
 import axios from "axios"
 import jwtAxios from '@utils/jwtUtil.tsx';
 
-export const API_SERVER_HOST = 'http://localhost:8080'
-
+export const API_SERVER_HOST = import.meta.env.VITE_API_URL;
 const host = `${API_SERVER_HOST}/api/member`
 
 export const loginPost = async (loginParam) => {

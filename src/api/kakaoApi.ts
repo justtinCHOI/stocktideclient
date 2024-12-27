@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API_SERVER_HOST} from "./memberApi";
+const API_SERVER_HOST = import.meta.env.VITE_API_URL;
 
 const rest_api_key =`8f46337bde852c2d39573c6c60acfd65` //REST키값
 

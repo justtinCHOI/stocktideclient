@@ -6,17 +6,15 @@ import { RootState } from '../store.tsx';
 import { useSelector } from 'react-redux';
 import { ChartData, CompareChartData, StockMinData } from '@typings/stock';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const upColor = "rgba(198, 6, 6, 0.37)";
 const downColor = "rgba(59, 119, 247, 0.51)";
-const volumColor = "rgba(57, 118, 249, 0.56)";
+const volumeColor = "rgba(57, 118, 249, 0.56)";
 const pointerColor = "#cc3c3a";
 const indexColor = "#4479c2";
 const averageLineMinute = 10;
 const averageDay = 10;
-
-
 
 const useGetStockChart = (companyId: number) => {
     const { stockPrice, stockPriceLoading } = useGetStockData(companyId);
@@ -385,7 +383,7 @@ const useGetStockChart = (companyId: number) => {
                     data: organizedChartData.volumes,
                     yAxisIndex: 1,
                     itemStyle: {
-                        color: volumColor,
+                        color: volumeColor,
                     },
                 },
                 compareChart,

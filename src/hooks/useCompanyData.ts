@@ -3,7 +3,7 @@ import axios from 'axios';
 import { CompanyDataResponse } from '@typings/hooks';
 import { CompanyResponseDto } from '@typings/dto';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 // 커스텀 훅 정의
 function useCompanyData(startCompanyId: number, endCompanyId: number): CompanyDataResponse {
