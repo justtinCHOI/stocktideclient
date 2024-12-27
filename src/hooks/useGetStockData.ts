@@ -1,4 +1,3 @@
-// 🟢 기존 로직
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
@@ -6,9 +5,7 @@ import axios from "axios";
 const BASE_URL = 'http://localhost:8080';
 
 ////useGetStockData : 현재시각에 가장 30분 단위에 패칭을 하고 그후 10분단위로 AXIOS를 호출로 회사 주가 정보 가져오기
-// const useGetStockData = (companyId: number) => {
-const useGetStockData = (companyId) => {
-    // 🟢 기존 로직
+const useGetStockData = (companyId: number) => {
     const [autoRefetch, setAutoRefetch] = useState(false);
     const queryClient = useQueryClient();
 
@@ -53,8 +50,7 @@ const useGetStockData = (companyId) => {
 export default useGetStockData;
 
 // 차트 데이터 받아오는 fetch 로직
-// const getChartData = async (companyId: number) => {
-const getChartData = async (companyId) => {
+const getChartData = async (companyId: number) => {
     const res = await axios.get(`${BASE_URL}/api/company/charts/${companyId}`);
     return res.data;
 };

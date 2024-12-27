@@ -6,6 +6,7 @@ import stockOrderTypeSlice from "./slices/stockOrderTypeSlice";
 import stockOrderPriceSlice from "./slices/stockOrderPriceSlice";
 import stockOrderVolumeSlice from "./slices/stockOrderVolumeSlice";
 import decisionWindowSlice from "./slices/decisionWindowSlice";
+import compareIdSlice from "./slices/companyIdSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     stockOrderPriceSlice,
     stockOrderVolumeSlice,
     decisionWindowSlice,
+    compareIdSlice,
   }
 });
 

@@ -1,10 +1,9 @@
 import {useQuery} from "react-query";
-import PropTypes from "prop-types";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import {useEffect, useState} from "react";
 
 //useGetStockInfo : 현재시각에 가장 30분 단위에 패칭을 하고 그후 10분단위로 AXIOS를 호출로 회사 정보 가져오기.
-const useGetStockInfo = (companyId) => {
+const useGetStockInfo = (companyId: number) => {
 
     const [autoRefetch, setAutoRefetch] = useState(false);
 
@@ -42,7 +41,7 @@ const useGetStockInfo = (companyId) => {
     return { stockInfo: data, stockInfoLoading: isLoading, stockInfoError: error };
 };
 
-const getStockInfo = async (companyId) => {
+const getStockInfo = async (companyId: number) => {
 
     const res = await jwtAxios.get(`http://localhost:8080/api/company/${companyId}`);
 
@@ -50,7 +49,3 @@ const getStockInfo = async (companyId) => {
 };
 
 export default useGetStockInfo;
-
-useGetStockInfo.propTypes = {
-    companyId: PropTypes.number
-};

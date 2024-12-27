@@ -1,8 +1,10 @@
-import {useState, useEffect, useMemo, useCallback} from "react";
-import useGetStockData from "./useGetStockData";
-import useGetStockInfo from "./useGetStockInfo";
-import axios from "axios";
-import { UseSocketReturn } from '@typings/hooks';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import useGetStockData from './useGetStockData';
+import useGetStockInfo from './useGetStockInfo';
+import axios from 'axios';
+import { RootState } from '../store.tsx';
+import { useSelector } from 'react-redux';
+import { ChartData, CompareChartData, StockMinData } from '@typings/stock';
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -14,31 +16,9 @@ const indexColor = "#4479c2";
 const averageLineMinute = 10;
 const averageDay = 10;
 
-// // StockMin type
-// interface StockProps {
-//     stockMinId: number;
-//     companyId: number;
-//     stockTradeTime: string; // 주식 체결 시간 (LocalDateTime)
-//     stck_cntg_hour: string; // 주식 체결 시간 (String)
-//     stck_prpr: string; // 주식 현재가
-//     stck_oprc: string; // 주식 시가
-//     stck_hgpr: string; // 주식 최고가
-//     stck_lwpr: string; // 주식 최저가
-//     cntg_vol: string; // 체결 거래량
-// }
-//
-// // time, title, values, volumes
-// interface OrganizedChartProps {
-//     time: string[];
-//     tooltipTitle: string[];
-//     values: number[][];
-//     volumes: number[][];
-// }
+
 
 const useGetStockChart = (companyId: number) => {
-    // const { stockPrice } = useGetStockData(companyId);// 봉 420개
-    // const { stockInfo } = useGetStockInfo(companyId);// 회사정보 -> corpName
-
     const { stockPrice, stockPriceLoading } = useGetStockData(companyId);
     const { stockInfo, stockInfoLoading } = useGetStockInfo(companyId);
 
@@ -46,12 +26,10 @@ const useGetStockChart = (companyId: number) => {
     const [chartData, setChartData] = useState([]); // StockProps[] : 봉 배열
 
     // 비교차트 설정 (10일 기준, 이동 평균선)
-    // const compareId = useSelector((state: StateProps) => state.compareChart);
-    // const compareId = useSelector((state) => state.compareChart);
-    const [compareId, setCompareId] = useState(3); // StockProps[] : 봉 배열
+    const compareId = useSelector((state: RootState) => state.compareIdSlice);
     const { stockInfo: compareInfo } = useGetStockInfo(compareId);
     const [compareName, setCompareName] = useState("");
-    const [compareChart, setCompare] = useState(undefined);
+    const [compareChart, setCompareChart] = useState<CompareChartData | undefined>(undefined);
 
     // 회사정보 -> 회사이름, 봉 420개 -> chartData
     useEffect(() => {
@@ -76,7 +54,7 @@ const useGetStockChart = (companyId: number) => {
         }
 
         if (companyId === null) {
-            setCompare(undefined);
+            setCompareChart(undefined);
         }
     }, [companyId, compareId, compareName]);
 
@@ -95,12 +73,9 @@ const useGetStockChart = (companyId: number) => {
     }, [chartData]);
     const movingAvgLine = calculateMovingAvgLine(averageLineMinute, organizedChartData);
 
-    // const getCompareChart = async (compareId: number, compareName: string) => {
-    const getCompareChart =  useCallback(async (compareId, compareName) => {
+    const getCompareChart =  useCallback(async (compareId: number, compareName: string) => {
         const response = await axios.get(`${BASE_URL}/api/company/charts/${compareId}`);
         const data = await response.data;
-
-        console.log('useGetStockChart response', response);
 
         const compareChartData = organizeData(data);
         const compareMovingAvgData = calculateMovingAvgLine(averageDay, compareChartData);
@@ -116,9 +91,7 @@ const useGetStockChart = (companyId: number) => {
             yAxisIndex: 2,
         };
 
-        console.log('useGetStockChart compareChartData', compareChartData);
-
-        setCompare(compareMovingAvgChart);
+        setCompareChart(compareMovingAvgChart);
     }, []);
 
     // 데이터 유효성 검증 및 정리_ organizedChartData -> { options, chartStyle }
@@ -127,8 +100,6 @@ const useGetStockChart = (companyId: number) => {
             console.warn("Organized chart data is invalid");
             return null;
         }
-
-        console.log('useGetStockChart organizedChartData', organizedChartData);
 
         // Chart options 정의
         return {
@@ -144,8 +115,7 @@ const useGetStockChart = (companyId: number) => {
                 axisPointer: {
                     type: "cross",
                 },
-                // formatter: (params: any) => {
-                formatter: (params) => {
+                formatter: (params: any) => {
                     const dataIndex = params[0]?.dataIndex || 0;
 
                     const openPriceText = "• 시가";
@@ -165,7 +135,7 @@ const useGetStockChart = (companyId: number) => {
                     const lowPrice = dataPoint[3].toLocaleString();
                     const volume = organizedChartData.volumes[dataIndex][1].toLocaleString();
 
-                    const tooltipContent = `
+                    return `
         <div style="line-height: 20.5px;">
           <div style="font-weight: 600; font-size: 13px; color:#e22926;">${date}</div>
           </br>
@@ -192,8 +162,6 @@ const useGetStockChart = (companyId: number) => {
           </div>
         </div>
         `;
-
-                    return tooltipContent;
                 },
                 borderWidth: 1,
                 borderColor: "#ccc",
@@ -424,7 +392,6 @@ const useGetStockChart = (companyId: number) => {
             ],
         };
     }, [corpName, chartData, compareName, compareChart, organizedChartData, movingAvgLine]);
-    // }, [organizedChartData]);
 
     const chartStyle = {
         width: "100%",
@@ -441,8 +408,7 @@ const useGetStockChart = (companyId: number) => {
 export default useGetStockChart;
 
 // 1) 차트 데이터 정리 (x축 날짜 데이터, y축 종가 및 거래량 데이터)
-// const organizeData = (rawData: StockProps[]) => {
-export const organizeData = (rawData) => {
+export const organizeData = (rawData: StockMinData[]) => {
 
     if (!rawData || rawData.length === 0) {
         console.warn("Raw data is empty or undefined");
@@ -499,7 +465,7 @@ export const organizeData = (rawData) => {
 
 // 2) 이동 평균선 데이터 계산
 // function calculateMovingAvgLine(minuteCount: number, data: OrganizedChartProps) {
-export function calculateMovingAvgLine(minuteCount, data) {
+export function calculateMovingAvgLine(minuteCount: number, data: ChartData) {
     const result = [];
     const length = data.values.length;
 

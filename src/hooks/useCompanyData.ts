@@ -1,7 +1,7 @@
 import {useQuery} from 'react-query';
 import axios from 'axios';
 import { CompanyDataResponse } from '@typings/hooks';
-import { CompanyResponseDto } from '@typings/dto.d.ts';
+import { CompanyResponseDto } from '@typings/dto';
 
 const BASE_URL = 'http://localhost:8080';
 
