@@ -3,7 +3,7 @@ import {Navigate} from "react-router";
 import domesticRouter from "@router/stock/domestic/domesticRouter.tsx";
 import {Loading} from "@router/root.tsx";
 
-const Domestic = lazy(() => import("@pages/stock/domestic/Domestic.tsx"));
+const Domestic = lazy(() => import("@pages/stock/domestic/Domestic"));
 
 const stockRouter = () => {
     return[

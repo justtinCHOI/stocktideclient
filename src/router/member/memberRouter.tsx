@@ -4,8 +4,8 @@ import {Loading} from "@router/root.tsx";
 
 const memberRouter = () => {
 
-const Login = lazy(() => import("@pages/member/login/Login.tsx"))
-const KakaoRedirect = lazy(() => import("@pages/member/kakao/KakaoRedirect.tsx"))
+const Login = lazy(() => import("@pages/member/login/Login"))
+const KakaoRedirect = lazy(() => import("@pages/member/kakao/KakaoRedirect"))
 
     return [
         {

@@ -1,8 +1,27 @@
-interface Window {
+interface PaymentWindow {
     IMP?: any;
 }
 
-declare const window: Window;
+declare const window: PaymentWindow;
+
+// Payment 관련 타입 정의
+interface PaymentData {
+    total_price: number;
+    address: string;
+    phone: string;
+}
+
+interface PaymentResponse {
+    code: number;
+    msg: string;
+}
+
+interface PaymentSuccessResponse {
+    success: boolean;
+    // 기타 결제 성공시 필요한 응답 필드들
+    [key: string]: any;
+}
+
 let IMP = window.IMP;
 IMP.init('imp76806111')
 
@@ -119,15 +138,18 @@ export function requestPay() {
                         buyer_addr: fullAddress,
                         buyer_postcode: "01181"
                     },
-                    function (rsp) { // callback
+                    function (rsp:PaymentSuccessResponse) { // callback
                         if (rsp.success) {
-                            console.log(rsp);
                             console.log(data);
-                            sendData("/api/POST/payment", data2, paymentSuccess, null)
+                            // sendData("/api/POST/payment", data2, paymentSuccess, null)
+                            sendData("/api/POST/payment", data2)
+                            paymentSuccess();
                         } else {
                             console.log(rsp);
                         }
                     });
+            } else {
+                handlePaymentResponse(data);
             }
         })
         .catch(error => {
@@ -138,4 +160,36 @@ export function requestPay() {
 
 const paymentSuccess = () =>{
     location.href = "/cart"
+}
+
+async function sendData(url: string, data: PaymentData): Promise<void> {
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+    } catch (error) {
+        console.error('Failed to send payment data:', error);
+        throw error;
+    }
+}
+
+function handlePaymentResponse(response: PaymentResponse): void {
+    switch (response.code) {
+        case 666:
+            alert(response.msg);
+            location.href = "/logins";
+            break;
+        case 400:
+            alert(response.msg);
+            location.href = "/main";
+            break;
+        case 500:
+            alert(response.msg);
+            location.href = "/cart";
+            break;
+    }
 }

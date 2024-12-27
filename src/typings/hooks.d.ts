@@ -49,11 +49,6 @@ export interface CustomLoginHook {
   moveToLogin: () => void;
 }
 
-export interface LoginParam {
-  email: string;
-  password: string;
-}
-
 export interface CustomMoveHook {
   moveToList: () => void;
   moveToModify: (num: number) => void;

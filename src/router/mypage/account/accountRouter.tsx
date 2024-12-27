@@ -2,9 +2,9 @@ import {Suspense, lazy} from "react";
 import {Navigate} from "react-router-dom";
 import {Loading} from "@router/root.tsx";
 
-const Manage = lazy(() => import("@pages/my/account/manage/Manage.tsx"))
-const Exchange = lazy(() => import("@pages/my/account/exchange/Exchange.tsx"))
-const Charge = lazy(() => import("@pages/my/account/charge/Charge.tsx"))
+const Manage = lazy(() => import("@pages/my/account/manage/Manage"))
+const Exchange = lazy(() => import("@pages/my/account/exchange/Exchange"))
+const Charge = lazy(() => import("@pages/my/account/charge/Charge"))
 
 const accountRouter = () => {
 

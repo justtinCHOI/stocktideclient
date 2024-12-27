@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import ResultModal from "@common/ResultModal.tsx";
+import ResultModal from "@components/common/ResultModal.tsx";
 import { postAdd } from "@api/companyApi.ts";
 import useCustomMove from "@hooks/useCustomMove.ts";
 import {Button, ButtonRow, Container, FormRow, Input, Label} from "@assets/css/content.tsx";
+import { CompanyCreateDto } from '@typings/dto';
 
 const initState = {
     code: '',
@@ -12,7 +13,7 @@ const initState = {
 
 function CompanyAddComponent() {
 
-    const [company, setCompany] = useState(initState);
+    const [company, setCompany] = useState<CompanyCreateDto>(initState);
     const [result, setResult] = useState(null);
     const { moveToList } = useCustomMove();
 

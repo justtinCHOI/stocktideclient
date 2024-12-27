@@ -19,7 +19,7 @@ export const getKakaoLoginLink = () => {
 }
 
 //2. accessToken 받기
-export const getAccessToken = async (authCode) => {
+export const getAccessToken = async (authCode: string) => {
 
   const header = {
    headers: {
@@ -39,7 +39,7 @@ export const getAccessToken = async (authCode) => {
 }
 
 //3. 사용자 정보 얻기
-export const getMemberWithAccessToken = async(accessToken) => {
+export const getMemberWithAccessToken = async(accessToken: string) => {
 
   const res = await axios.get(`${API_SERVER_HOST}/api/member/kakao?accessToken=${accessToken}`)
 

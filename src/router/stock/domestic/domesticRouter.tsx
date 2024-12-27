@@ -7,9 +7,9 @@ import searchRouter from "@router/stock/domestic/search/searchRouter.tsx";
 
 const Loading = <div style={{background:'#F00'}}>Loading.........</div>
 
-const Item = lazy(() => import("@pages/stock/domestic/item/Item.tsx"));
-const Search = lazy(() => import("@pages/stock/domestic/search/Search.tsx"));
-const Detail = lazy(() => import("@pages/stock/domestic/detail/Detail.tsx"));
+const Item = lazy(() => import("@pages/stock/domestic/item/Item"));
+const Search = lazy(() => import("@pages/stock/domestic/search/Search"));
+const Detail = lazy(() => import("@pages/stock/domestic/detail/Detail"));
 
 const domesticRouter = () => {
     return[

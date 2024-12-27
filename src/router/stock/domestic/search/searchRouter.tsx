@@ -2,7 +2,7 @@ import {lazy, Suspense} from "react";
 import {Navigate} from "react-router-dom";
 import {Loading} from "@router/root.tsx";
 
-const Search = lazy(() => import("@pages/stock/domestic/search/Search.tsx"));
+const Search = lazy(() => import("@pages/stock/domestic/search/Search"));
 
 const searchRouter = () => {
     return[

@@ -14,12 +14,12 @@ export const Loading = (
     </div>
 );
 
-const Stock = lazy(() => import("@pages/stock/Stock.tsx"));
-const Welcome = lazy(() => import("@pages/welcome/Welcome.tsx"));
-const My = lazy(() => import("@pages/my/My.tsx"));
-const BasicLayout = lazy(() => import("@layouts/BasicLayout.tsx"));
-const Member = lazy(() => import("@pages/member/Member.tsx"));
-const NotFound = lazy(() => import('@pages/NotFound.tsx'));
+const Stock = lazy(() => import("@pages/stock/Stock"));
+const Welcome = lazy(() => import("@pages/welcome/Welcome"));
+const My = lazy(() => import("@pages/my/My"));
+const BasicLayout = lazy(() => import("@layouts/BasicLayout"));
+const Member = lazy(() => import("@pages/member/Member"));
+const NotFound = lazy(() => import('@pages/NotFound'));
 
 const root = createBrowserRouter([
     {

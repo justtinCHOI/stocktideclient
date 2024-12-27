@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {deleteOne, getOne, putOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
 import ResultModal from "@components/common/ResultModal.jsx";
@@ -12,6 +12,7 @@ import {
     ReadOnlyInput,
     ButtonRow, ContentBottom
 } from "@assets/css/content.tsx"
+import { CompanyUpdateDto } from '@typings/dto';
 
 const initState = {
     companyId: 0,
@@ -23,7 +24,7 @@ const initState = {
 function CompanyModifyComponent({companyId}) {
 
     //나중에 값이 바뀐다는 것은 상태처리라는 뜻
-    const [company, setCompany] = React.useState(initState)
+    const [company, setCompany] = useState<CompanyUpdateDto>(initState)
 
     const {moveToList, moveToRead} = useCustomMove();
 

@@ -101,3 +101,17 @@ export interface CashResponseDto {
   money: number;
   dollar: number;
 }
+
+// company
+export interface CompanyCreateDto {
+  code: string;
+  korName: string;
+  createdAt?: string;
+}
+
+export interface CompanyUpdateDto {
+  companyId: number,
+  code: string;
+  korName: string;
+  createdAt?: string;
+}
