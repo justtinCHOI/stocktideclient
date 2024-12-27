@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaArrowRight } from 'react-icons/fa';
+import { ActiveProps } from '@components/welcome/main/CountryNews.tsx';
 
 const indicesData = [
     { name: 'S&P 500', value: '4,300' },
@@ -27,7 +28,7 @@ const MajorIndices = () => {
             <Title>📊 주요지수</Title>
             <IndicesList>
                 {indicesData.map((index, idx) => (
-                    <IndexItem key={idx} $active={idx === currentIndex ? "true" : "false"}>
+                    <IndexItem key={idx} $active={idx === currentIndex}>
                         <h3>{index.name}</h3>
                         <p>{index.value}</p>
                         <MoreLink>
@@ -61,10 +62,10 @@ const IndicesList = styled.div`
     padding: 10px;
 `;
 
-const IndexItem = styled.div`
+const IndexItem = styled.div<ActiveProps>`
     position: absolute;
     width: 100%;
-    opacity: ${({ $active }) => ($active === "true" ? 1 : 0)};
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
     transition: opacity 1s ease-in-out;
     h3 {
         font-size: 1rem;

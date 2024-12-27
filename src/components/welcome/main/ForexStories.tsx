@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaArrowRight } from 'react-icons/fa';
+import { ActiveProps } from '@components/welcome/main/CountryNews.tsx';
 
 const storiesData = [
     { title: '달러 강세', content: '미국 달러는 주요 통화 대비 강세를 보였습니다. 경제 지표 개선과 함께...' },
@@ -27,7 +28,7 @@ const ForexStories = () => {
             <Title>💱 외환시장 스토리</Title>
             <StoriesList>
                 {storiesData.map((story, index) => (
-                    <StoryItem key={index} $active={index === currentIndex ? "true" : "false"}>
+                    <StoryItem key={index} $active={index === currentIndex}>
                         <h3>{story.title}</h3>
                         <p>{story.content}</p>
                         <MoreLink>
@@ -61,10 +62,10 @@ const StoriesList = styled.div`
     padding: 10px;
 `;
 
-const StoryItem = styled.div`
+const StoryItem = styled.div<ActiveProps>`
     position: absolute;
     width: 100%;
-    opacity: ${({ $active }) => ($active === "true" ? 1 : 0)};
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
     transition: opacity 1s ease-in-out;
     h3 {
         font-size: 1rem;

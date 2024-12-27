@@ -26,7 +26,7 @@ const CountryNews = () => {
             <Title>🛫 국가별 뉴스</Title>
             <NewsList>
                 {newsData.map((news, index) => (
-                    <NewsItem key={index} $active={index === currentIndex ? "true" : "false"}>
+                    <NewsItem key={index} $active={index === currentIndex}>
                         <h3>{news.title}</h3>
                         <p>{news.content}</p>
                         <MoreLink>
@@ -60,10 +60,14 @@ const NewsList = styled.div`
     padding: 10px;
 `;
 
-const NewsItem = styled.div`
+export interface ActiveProps {
+    $active: boolean;
+}
+
+const NewsItem = styled.div<ActiveProps>`
     position: absolute;
     width: 100%;
-    opacity: ${({ $active }) => ($active === "true" ? 1 : 0)};
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
     transition: opacity 1s ease-in-out;
     h3 {
         font-size: 1rem;

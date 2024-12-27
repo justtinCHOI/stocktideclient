@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaArrowRight } from 'react-icons/fa';
+import { ActiveProps } from '@components/welcome/main/CountryNews.tsx';
 
 const earningsData = [
     { company: '애플', quarter: '2024년 1분기', earnings: '1050억 달러' },
@@ -27,7 +28,7 @@ const QuarterlyEarnings = () => {
             <Title>💼 분기별 실적 발표</Title>
             <EarningsList>
                 {earningsData.map((earning, index) => (
-                    <EarningsItem key={index} $active={index === currentIndex ? "true" : "false"}>
+                    <EarningsItem key={index} $active={index === currentIndex}>
                         <h3>{earning.company}: {earning.quarter}</h3>
                         <p>{earning.earnings}</p>
                         <MoreLink>
@@ -61,10 +62,10 @@ const EarningsList = styled.div`
     padding: 10px;
 `;
 
-const EarningsItem = styled.div`
+const EarningsItem = styled.div<ActiveProps>`
     position: absolute;
     width: 100%;
-    opacity: ${({ $active }) => ($active === "true" ? 1 : 0)};
+    opacity: ${({ $active }) => ($active? 1 : 0)};
     transition: opacity 1s ease-in-out;
     h3 {
         font-size: 1rem;

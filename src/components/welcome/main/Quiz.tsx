@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaArrowRight } from 'react-icons/fa';
+import { ActiveProps } from '@components/welcome/main/CountryNews.tsx';
 
 const quizData = [
     { question: '주식 시장은 언제 개장합니까?', answer: '주식 시장은 월요일부터 금요일까지 오전 9시에 개장합니다.' },
@@ -27,7 +28,7 @@ const Quiz = () => {
             <Title>❓ OX 퀴즈 도전하기</Title>
             <QuizList>
                 {quizData.map((quiz, index) => (
-                    <QuizItem key={index} $active={index === currentIndex ? "true" : "false"}>
+                    <QuizItem key={index} $active={index === currentIndex}>
                         <h3>{quiz.question}</h3>
                         <p>{quiz.answer}</p>
                         <MoreLink>
@@ -61,10 +62,10 @@ const QuizList = styled.div`
     padding: 10px;
 `;
 
-const QuizItem = styled.div`
+const QuizItem = styled.div<ActiveProps>`
     position: absolute;
     width: 100%;
-    opacity: ${({ $active }) => ($active === "true" ? 1 : 0)};
+    opacity: ${({ $active }) => ($active? 1 : 0)};
     transition: opacity 1s ease-in-out;
     h3 {
         font-size: 1rem;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaArrowRight } from 'react-icons/fa';
+import { ActiveProps } from '@components/welcome/main/CountryNews.tsx';
 
 const rankingData = [
     { rank: 1, company: '애플', value: '2.3조 달러' },
@@ -27,7 +28,7 @@ const StockRanking = () => {
             <Title>📈 종목 순위</Title>
             <RankingList>
                 {rankingData.map((stock, index) => (
-                    <RankingItem key={index} $active={index === currentIndex ? "true" : "false"}>
+                    <RankingItem key={index} $active={index === currentIndex}>
                         <h3>Rank {stock.rank}: {stock.company}</h3>
                         <p>Market Value: {stock.value}</p>
                         <MoreLink>
@@ -61,10 +62,10 @@ const RankingList = styled.div`
     padding: 10px;
 `;
 
-const RankingItem = styled.div`
+const RankingItem = styled.div<ActiveProps>`
     position: absolute;
     width: 100%;
-    opacity: ${({ $active }) => ($active === "true" ? 1 : 0)};
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
     transition: opacity 1s ease-in-out;
     h3 {
         font-size: 1rem;
