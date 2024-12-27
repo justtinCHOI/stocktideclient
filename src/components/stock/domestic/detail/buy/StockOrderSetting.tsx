@@ -6,17 +6,18 @@ import {useParams} from "react-router";
 
 import PriceSetting from "./PriceSetting.js";
 import VolumeSetting from "./VolumeSetting.tsx";
-import OrderDecisionBtn from "./OrderDecisionBtn.js";
+import OrderDecisionBtn, { OrderTypeProps } from './OrderDecisionBtn.js';
+import { RootState } from '../../../../../store.tsx';
 
 const orderType01 = "매수";
 const orderType02 = "매도";
 
 const StockOrderSetting = () => {
     const dispatch = useDispatch();
-    const orderType = useSelector((state) => state.stockOrderTypeSlice);
+    const orderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
     const {companyId} = useParams();
-
-    const { stockInfo, stockInfoLoading, stockInfoError } = useGetStockInfo(companyId);
+    const companyIdNumber = Number(companyId); // 숫자로 변환
+    const { stockInfo, stockInfoLoading, stockInfoError } = useGetStockInfo(companyIdNumber);
 
     if (!stockInfo) {
         return null;
@@ -37,10 +38,10 @@ const StockOrderSetting = () => {
     return (
         <Container>
             <div className="OrderType">
-                <Buying onClick={handleSetBuying} $ordertype={orderType}>
+                <Buying onClick={handleSetBuying} $orderType={orderType}>
                     {orderType01}
                 </Buying>
-                <Selling onClick={handleSetSelling} $ordertype={orderType}>
+                <Selling onClick={handleSetSelling} $orderType={orderType}>
                     {orderType02}
                 </Selling>
             </div>
@@ -55,12 +56,12 @@ const StockOrderSetting = () => {
 export default StockOrderSetting;
 
 const OrderTypeChangeEffectLine = () => {
-    const orderType = useSelector((state) => state.stockOrderTypeSlice);
+    const orderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
 
     return (
         <DividingContainer >
-            <DefaultLine $ordertype={orderType}>
-                <DividingLine $ordertype={orderType} />
+            <DefaultLine $orderType={orderType}>
+                <DividingLine $orderType={orderType} />
             </DefaultLine>
         </DividingContainer>
     );
@@ -79,25 +80,25 @@ const Container = styled.div`
     }
 `;
 
-const Buying = styled.div`
+const Buying = styled.div<OrderTypeProps>`
     flex: 1 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 31px;
     font-size: 14px;
-    color: ${(props) => !props.$ordertype && "#e22926"};
+    color: ${(props) => !props.$orderType && "#e22926"};
     transition: color 0.5s;
 `;
 
-const Selling = styled.div`
+const Selling = styled.div<OrderTypeProps>`
     flex: 1 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 31px;
     font-size: 14px;
-    color: ${(props) => props.$ordertype && "#2679ed"};
+    color: ${(props) => props.$orderType && "#2679ed"};
     transition: color 0.5s;
 `;
 
@@ -105,15 +106,15 @@ const DividingContainer = styled.div`
     background-color: darkgray;
 `;
 
-const DefaultLine = styled.div`
-    transform: translateX(${(props) => (props.$ordertype ? "50%" : "0")});
+const DefaultLine = styled.div<OrderTypeProps>`
+    transform: translateX(${(props) => (props.$orderType ? "50%" : "0")});
     transition: transform 0.3s ease-in-out;
     width: 100%;
     height: 2px;
 `;
 
-const DividingLine = styled.div`
+const DividingLine = styled.div<OrderTypeProps>`
     width: 50%;
     height: 2px;
-    background-color: ${(props) => (props.$ordertype ? "#2679ed" : "#e22926")};
+    background-color: ${(props) => (props.$orderType ? "#2679ed" : "#e22926")};
 `;

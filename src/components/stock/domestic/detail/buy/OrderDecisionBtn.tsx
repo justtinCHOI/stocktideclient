@@ -4,6 +4,7 @@ import styled from "styled-components";
 import useGetCash from "@hooks/useGetCash.ts";
 import {setStockOrderVolume} from "@slices/stockOrderVolumeSlice.ts";
 import {openDecisionWindow} from "@slices/decisionWindowSlice.ts";
+import { RootState } from '../../../../../store.tsx';
 
 const availableMoneyText01 = "최대";
 const availableMoneyText02 = "원";
@@ -20,9 +21,9 @@ const OrderDecisionBtn = () => {
     }
 
     const dispatch = useDispatch();
-    const orderType = useSelector((state) => state.stockOrderTypeSlice);
-    const orderPrice = useSelector((state) => state.stockOrderPriceSlice);
-    const orderVolume = useSelector((state) => state.stockOrderVolumeSlice);
+    const orderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
+    const orderPrice = useSelector((state: RootState) => state.stockOrderPriceSlice);
+    const orderVolume = useSelector((state: RootState) => state.stockOrderVolumeSlice);
     const [totalOrderAmount, setTotalOrderAmount] = useState(0);
 
     const orderBtnText = orderType ? "매도" : "매수";
@@ -52,7 +53,7 @@ const OrderDecisionBtn = () => {
                 <div className="totalAmount">{totalOrderAmount.toLocaleString()}</div>
                 <div>{totalAmountUnit}</div>
             </TotalAmount>
-            <OrderBtn $ordertype={orderType} onClick={handleOpenDecisionWindow}>
+            <OrderBtn $orderType={orderType} onClick={handleOpenDecisionWindow}>
                 {orderBtnText}
             </OrderBtn>
         </div>
@@ -61,7 +62,11 @@ const OrderDecisionBtn = () => {
 
 export default OrderDecisionBtn;
 
-const AvailableMoney = styled.div`
+export interface OrderTypeProps {
+    $orderType: boolean;
+}
+
+const AvailableMoney = styled.div<OrderTypeProps>`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -100,20 +105,20 @@ const TotalAmount = styled.div`
     }
 `;
 
-const OrderBtn = styled.button`
+const OrderBtn = styled.button<OrderTypeProps>`
     width: 100%;
     height: 32px;
     margin-top: 16px;
     border: none;
     border-radius: 0.25rem;
-    background-color: ${(props) => (props.$ordertype ? "#2679ed" : "#e22926")};
+    background-color: ${(props) => (props.$orderType ? "#2679ed" : "#e22926")};
     transition: background-color 0.5s;
     color: #ffffff;
     font-weight: 400;
     cursor: pointer;
 
     &:hover {
-        background-color: ${(props) => (props.$ordertype ? "#034baf" : "#c20d09")};
+        background-color: ${(props) => (props.$orderType ? "#034baf" : "#c20d09")};
         transition: background-color 0.5s ease;
     }
 `;

@@ -1,5 +1,4 @@
-import {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
+import { FC, useEffect, useState } from 'react';
 import {getOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
 
@@ -11,7 +10,7 @@ const initState = {
     complete: false
 };
 
-function NewsComponent({tno}) {
+const NewsComponent: FC<SettingProps> = ({tno}) => {
     const [todo, setTodo] = useState(initState);
     const {moveToList, moveToModify} = useCustomMove();
 
@@ -48,7 +47,7 @@ function NewsComponent({tno}) {
     );
 }
 
-const makeDiv = (title, value) => (
+const makeDiv = (title: string, value: any) => (
     <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
             <div className="w-1/5 p-6 text-right font-bold">{title}</div>
@@ -58,9 +57,5 @@ const makeDiv = (title, value) => (
         </div>
     </div>
 );
-
-NewsComponent.propTypes = {
-    tno: PropTypes.number.isRequired
-};
 
 export default NewsComponent;

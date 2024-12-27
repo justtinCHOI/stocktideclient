@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "styled-components";
 import {useParams} from "react-router";
@@ -9,6 +9,8 @@ import {
 } from "@slices/stockOrderVolumeSlice.ts";
 import useGetCash from "@hooks/useGetCash.ts";
 import useGetHoldingStock from "@hooks/useGetHoldingStock.ts";
+import { RootState } from '../../../../../store.tsx';
+import { OrderTypeProps } from '@components/stock/domestic/detail/buy/OrderDecisionBtn.tsx';
 
 const volumeSettingTitle = "수량";
 const maximumVolumeText01 = "최대";
@@ -23,20 +25,21 @@ const percentageUnit = "%";
 const VolumeSetting = () => {
     const dispatch = useDispatch();
     const {companyId} = useParams();
-    const orderType = useSelector((state) => state.stockOrderTypeSlice);
-    const orderPrice = useSelector((state) => state.stockOrderPriceSlice);
-    const orderVolume = useSelector((state) => state.stockOrderVolumeSlice);
+    const companyIdNumber = Number(companyId);
+    const orderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
+    const orderPrice = useSelector((state: RootState) => state.stockOrderPriceSlice);
+    const orderVolume = useSelector((state: RootState) => state.stockOrderVolumeSlice);
 
     let availableSellingStock = 0;
 
     const { cashData } = useGetCash();
-    const { holdingStockData } = useGetHoldingStock(companyId);
+    const { holdingStockData } = useGetHoldingStock(companyIdNumber);
 
     let maximumBuyingVolume = 0;
 
     if (cashData && holdingStockData) {
-        maximumBuyingVolume = orderPrice !== 0 ? Math.trunc(cashData / orderPrice) : Math.trunc(cashData / 1);
-        const holdingCompanyStock = holdingStockData.filter((stock) => stock.companyId === companyId);
+        maximumBuyingVolume = orderPrice !== 0 ? Math.trunc(cashData / orderPrice) : Math.trunc(cashData);
+        const holdingCompanyStock = holdingStockData.filter((stock) => stock.companyId === companyIdNumber);
 
         if (holdingCompanyStock.length !== 0) {
             availableSellingStock = holdingCompanyStock[0].stockCount;
@@ -60,7 +63,7 @@ const VolumeSetting = () => {
         }
     };
 
-    const handleInputArrowBtn = (event) => {
+    const handleInputArrowBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "ArrowUp") {
             handlePlusOrderVolume();
         } else if (event.code === "ArrowDown") {
@@ -68,7 +71,7 @@ const VolumeSetting = () => {
         }
     };
 
-    const handleWriteOrderVolume = (event) => {
+    const handleWriteOrderVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         const numberInputValue = parseInt(inputValue, 10);
 
@@ -98,7 +101,7 @@ const VolumeSetting = () => {
 
     // 매수 -> 최대구매가능주식수 의 일정 비율만큼 매수
     // 매도 -> 최대매도가능주식수 의 일정 비율만큼 매도
-    const handleSetVolumePercentage = (volumePercentage) => {
+    const handleSetVolumePercentage = (volumePercentage: number) => {
         if (!orderType) {
             const orderVolume = Math.trunc(maximumBuyingVolume * (volumePercentage / 100));
             dispatch(setStockOrderVolume(orderVolume));
@@ -172,7 +175,7 @@ const Container = styled.div`
     margin-bottom: 56px;
 `;
 
-const TitleContainer = styled.div`
+const TitleContainer = styled.div<OrderTypeProps>`
     display: flex;
     flex-direction: row;
     justify-content: space-between;

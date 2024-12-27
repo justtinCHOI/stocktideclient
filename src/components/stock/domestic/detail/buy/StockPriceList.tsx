@@ -3,13 +3,16 @@ import useGetStockInfo from "@hooks/useGetStockInfo.ts";
 import styled from "styled-components";
 import StockPrice from "./StockPrice.js";
 import {useParams} from "react-router";
+import { OrderTypeProps } from '@components/stock/domestic/detail/buy/OrderDecisionBtn.tsx';
+import { RootState } from '../../../../../store.tsx';
 
 const StockPriceList = () => {
     // const companyId = useSelector((state) => state.companyId);
     const {companyId} = useParams();
+    const companyIdNumber = Number(companyId);
 
-    const stockOrderType = useSelector((state) => state.stockOrderTypeSlice);
-    const { stockInfo } = useGetStockInfo(companyId);
+    const stockOrderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
+    const { stockInfo } = useGetStockInfo(companyIdNumber);
 
     if (!stockInfo || !stockInfo.stockInfResponseDto || !stockInfo.stockAsBiResponseDto) {
         return null;
@@ -93,7 +96,7 @@ const StockPriceList = () => {
 
 export default StockPriceList;
 
-const Container = styled.div`
+const Container = styled.div<OrderTypeProps>`
     width: 40%;
     height: 100%;
     margin-right: 16px;

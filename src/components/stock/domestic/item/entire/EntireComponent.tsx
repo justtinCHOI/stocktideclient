@@ -28,7 +28,7 @@ function EntireComponent() {
                             company={company}
                             setShowChangePrice={setShowChangePrice}
                             showChangePrice={showChangePrice}
-                            onClick={() => moveToRead(company.companyId)}
+                            onclick={() => moveToRead(company.companyId)}
                         />
                     ))
                 )}

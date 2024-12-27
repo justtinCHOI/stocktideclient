@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {deleteOne, getOne, putOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
 import ResultModal from "@components/common/ResultModal.jsx";
@@ -13,22 +13,27 @@ import {
     ButtonRow, ContentBottom
 } from "@assets/css/content.tsx"
 import { CompanyUpdateDto } from '@typings/dto';
+import { CompanyInfoState } from '@typings/company';
 
-const initState = {
+const initState: CompanyInfoState = {
     companyId: 0,
     code: '',
     korName: '',
     createdAt: '',
 };
 
-function CompanyModifyComponent({companyId}) {
+interface CompanyModifyComponentProps {
+    companyId: number;
+}
+
+const CompanyModifyComponent: FC<CompanyModifyComponentProps> = ({companyId}) => {
 
     //나중에 값이 바뀐다는 것은 상태처리라는 뜻
     const [company, setCompany] = useState<CompanyUpdateDto>(initState)
 
     const {moveToList, moveToRead} = useCustomMove();
 
-    const [result, setResult] = React.useState(null)
+    const [result, setResult] = useState<string | null>(null)
 
     useEffect(() => {
         getOne(companyId).then(data => {
@@ -39,9 +44,12 @@ function CompanyModifyComponent({companyId}) {
         });
     }, [companyId]);
 
-    const handleChangeCompany = (e) => {
-        company[e.target.name] = e.target.value
-        setCompany({...company})
+    const handleChangeCompany = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setCompany(prev => ({
+            ...prev,
+            [name]: value
+        }));
         console.log("handleChangeCompany ", company)
     }
 
@@ -94,8 +102,8 @@ function CompanyModifyComponent({companyId}) {
                 {/*</FormRow>*/}
 
                 <ButtonRow>
-                    <Button bgColor="red" onClick={handleClickDelete}>삭제</Button>
-                    <Button bgColor="blue" onClick={handleClickModify}>수정</Button>
+                    <Button style={{backgroundColor: 'red'}} onClick={handleClickDelete}>삭제</Button>
+                    <Button style={{backgroundColor: 'blue'}} onClick={handleClickModify}>수정</Button>
                 </ButtonRow>
             <ContentBottom/>
             </Container>

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {getOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
@@ -10,15 +10,20 @@ import {
     FormRow,
     Label, ReadOnlyInput,
 } from "@assets/css/content.tsx";
+import { CompanyInfoState } from '@typings/company';
 
-const initState = {
+const initState: CompanyInfoState = {
     companyId: 0,
     code: '',
     korName: '',
     createdAt: '',
 };
 
-function CompanyInfoComponent({companyId}) {
+interface CompanyInfoComponentProps {
+  companyId: number;
+}
+
+const CompanyInfoComponent: FC<CompanyInfoComponentProps> = ({companyId}) => {
     const [company, setCompany] = useState(initState);
     const {moveToModify} = useCustomMove();
 

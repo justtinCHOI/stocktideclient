@@ -2,11 +2,16 @@ import { styled } from "styled-components";
 import EChartsReact from "echarts-for-react";
 import useGetStockChart from "@hooks/useGetStockChart.ts";
 import PropTypes from "prop-types";
+import { FC } from 'react';
 
 const loadingText = "로딩 중 입니다...";
 const errorText = "화면을 불러올 수 없습니다";
 
-const ChartComponent = ({companyId}) => {
+interface ChartComponentProps {
+    companyId: number;
+}
+
+const ChartComponent: FC<ChartComponentProps> = ({companyId}) => {
 
     const { options, chartStyle, loading } = useGetStockChart(companyId);
 

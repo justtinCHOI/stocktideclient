@@ -1,18 +1,27 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setStockOrderPrice } from "@slices/stockOrderPriceSlice.ts";
-import PropTypes from "prop-types";
+import { RootState } from '../../../../../store.tsx';
 
 const changeRateUnit = `%`;
 
-const StockPrice = (props) => {
-    // const { index, price, volume, changeRate, totalSellingVolume, totalBuyingVolume } = props;
-    const { index, price, volume, changeRate } = props;
+interface StockPriceProps {
+    key: number;
+    index: number;
+    price: number;
+    volume: number;
+    changeRate: string;
+    totalSellingVolume: number;
+    totalBuyingVolume: number;
+}
+
+const StockPrice: FC<StockPriceProps> = ({ index, price, volume, changeRate, totalSellingVolume, totalBuyingVolume } ) => {
+// const StockPrice: FC<StockPriceProps> = ({ index, price, volume, changeRate} ) => {
 
     const dispatch = useDispatch();
-    const orderPrice = useSelector((state) => state.stockOrderPriceSlice);
-    const ref = useRef(null);
+    const orderPrice = useSelector((state: RootState) => state.stockOrderPriceSlice);
+    const ref = useRef<HTMLInputElement>(null);
 
     const handleSetOrderPrice = () => {
         dispatch(setStockOrderPrice(price));
@@ -36,7 +45,7 @@ const StockPrice = (props) => {
             </Price>
             <Volume $index={index}>
                 <div className="volume">{volume.toLocaleString()}</div>
-                {/*<VolumePercentage index={index} volume={volume} upperPriceVolumeSum={totalSellingVolume} lowerPriceVolumeSum={totalBuyingVolume} />*/}
+                <VolumePercentage index={index} volume={volume} upperPriceVolumeSum={totalSellingVolume} lowerPriceVolumeSum={totalBuyingVolume} />
             </Volume>
         </Container>
     );
@@ -44,17 +53,15 @@ const StockPrice = (props) => {
 
 export default StockPrice;
 
-StockPrice.propTypes = {
-    index: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    volume: PropTypes.number.isRequired,
-    changeRate: PropTypes.string.isRequired,
-    totalSellingVolume: PropTypes.number.isRequired,
-    totalBuyingVolume: PropTypes.number.isRequired,
+interface VolumePercentageProps {
+    index: number;
+    volume: number;
+    upperPriceVolumeSum: number;
+    lowerPriceVolumeSum: number;
 };
 
 // 전체 매도/도수 거래량 대비 개별가격 매도/매수 거래량 비율
-const VolumePercentage = (props) => {
+const VolumePercentage: FC<VolumePercentageProps>= (props) => {
     const { index, volume, upperPriceVolumeSum, lowerPriceVolumeSum } = props;
     const [width, setWidth] = useState(0);
 
@@ -65,14 +72,29 @@ const VolumePercentage = (props) => {
     return <StockVolumePercentage $index={index} $volume={volume} $upperPriceVolumeSum={upperPriceVolumeSum} $lowerPriceVolumeSum={lowerPriceVolumeSum} style={{ width: `${width}%` }} />;
 };
 
-VolumePercentage.propTypes = {
-    index: PropTypes.number.isRequired,
-    volume: PropTypes.number.isRequired,
-    upperPriceVolumeSum: PropTypes.number.isRequired,
-    lowerPriceVolumeSum: PropTypes.number.isRequired,
-};
+export interface PriceProps {
+    $price: boolean;
+}
 
-const Container = styled.div`
+export interface ChangeRateProps {
+    $changeRate: number;
+}
+
+export interface IndexProps {
+    $index: number;
+}
+
+export interface OrderPriceProps {
+    $orderPrice: number;
+}
+
+interface ContainerProps {
+    $price: number;
+    $orderPrice: number;
+    $index: number;
+}
+
+const Container = styled.div<ContainerProps>`
     width: 100%;
     height: 46px;
     margin-bottom: 2px;
@@ -87,7 +109,7 @@ const Container = styled.div`
     }
 `;
 
-const Price = styled.div`
+const Price = styled.div<ChangeRateProps>`
     width: 50%;
     display: flex;
     padding-right: 11px;
@@ -107,7 +129,7 @@ const Price = styled.div`
     }
 `;
 
-const Volume = styled.div`
+const Volume = styled.div<IndexProps>`
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -124,7 +146,7 @@ const Volume = styled.div`
     }
 `;
 
-const StockVolumePercentage = styled.span`
+const StockVolumePercentage = styled.span<{ $index: number; $volume: number; $upperPriceVolumeSum: number; $lowerPriceVolumeSum: number }>`
     height: 2px;
     background-color: ${(props) => (props.$index < 10 ? "#2679ed" : "#e22926")};
     transition: width 0.5s ease;

@@ -5,59 +5,23 @@ import useGetStockInfo from '@hooks/useGetStockInfo.ts';
 import {dummyLogo, logoList} from "@utils/companyLogos.ts"
 import StockOrder from "./StockOrder.tsx";
 import LoginRequestIndicator from "@components/common/LoginRequestIndicator";
+import { RootState } from '../../../../../store.tsx';
+import { FC } from 'react';
 
-// const errorMessage = "정보를 불러올 수 없습니다";
-// const errorButtonText = "닫기";
-// const moneyRequireText = "현금 충전이 필요한 서비스입니다";
-// const moenyRequireBtnText = "현금 충전하러 가기";
-// const upperbarTitle = "주식주문";
-// const loginBtnText = "StockFish 로그인";
+interface BuyComponentProps {
+    companyId: number;
+}
+
 const marketType = "코스피";
 
-const BuyComponent = ({companyId}) => {
-    const loginState = useSelector((state) => state.loginSlice);
-    // const {moveToManage} = useCustomCash();
-
+const BuyComponent: FC<BuyComponentProps> = ({companyId}) => {
+    const loginState = useSelector((state: RootState) => state.loginSlice);
     const isLogin = !!loginState.email;
 
     const {stockInfo} = useGetStockInfo(companyId);
     if (!stockInfo || !stockInfo.korName || !stockInfo.code || !stockInfo.stockInfResponseDto.prdy_ctrt) {
         return null;
     }
-
-    // const { stockPrice} = useGetStockData(companyId);
-    // const { cashLoading, cashError } = useGetCash();
-    // const { orderRecordLoading, orderRecordError } = useGetStockOrderRecord();
-    // const { holdingStockLoading, holdingStockError } = useGetHoldingStock();
-    // const { compnayListLoading, companyListError } = useGetCompanyList();
-
-    // const isLoading = stockInfoLoading || stockPriceLoading || cashLoading || orderRecordLoading || holdingStockLoading || compnayListLoading;
-    // const isError = stockInfoError || stockPriceError || orderRecordError || holdingStockError || companyListError;
-
-    // if (isLoading) {
-    //     return <Container orderSet={stockOrderSet}>로딩 중</Container>;
-    // }
-    //
-    // if (isError || stockPrice.length === 0) {
-    //     return (
-    //         <Container orderSet={stockOrderSet}>
-    //             <div className="ErrorContainer">
-    //                 <div className="ErrorMessage">{errorMessage}</div>
-    //             </div>
-    //         </Container>
-    //     );
-    // }
-    //
-    // if (cashError) {
-    //     return (
-    //         <Container orderSet={stockOrderSet}>
-    //             <MoneyRequireContainer>
-    //                 <div className="Notification">{moneyRequireText}</div>
-    //                 <button className="LoginButton" onClick={moveToManage}>{moenyRequireBtnText}</button>
-    //             </MoneyRequireContainer>
-    //         </Container>
-    //     );
-    // }
 
     const corpName = stockInfo.korName;
     const stockCode = stockInfo.code;
@@ -155,7 +119,11 @@ const Container = styled.aside`
 
 // const MoneyRequireContainer = styled(LoginRequestContainer)``;
 
-const StockName = styled.section`
+interface priceChangeRageProps{
+    $priceChangeRate: number;
+}
+
+const StockName = styled.section<priceChangeRageProps>`
     border-bottom: 1px solid #ddd;
     width: calc(100vw - 20px);
     height: 64px;

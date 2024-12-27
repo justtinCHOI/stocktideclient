@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "styled-components";
-import PropTypes from "prop-types";
 import {
     minusStockOrderPrice,
     plusStockOrderPrice,
     setStockOrderPrice
 } from "@slices/stockOrderPriceSlice.ts";
+import { StockAsBiResponseDto } from '@typings/dto';
+import { RootState } from '../../../../../store.tsx';
 
 const priceSettingTitle = "가격";
 const unitText = "원";
@@ -14,13 +15,17 @@ const unitText = "원";
 const noVolumeNotification = " [거래량 없음] 주문 시 대기 처리 됩니다";
 const existVolumeNotification = " [거래량 있음] 주문 시 체결 처리 됩니다";
 
-const PriceSetting = (props) => {
-    const { stockInfo, companyId } = props;
+interface PriceSettingProps {
+    stockInfo: StockAsBiResponseDto;
+    companyId: number;
+}
+
+const PriceSetting: FC<PriceSettingProps> = ({ stockInfo, companyId } ) => {
 
     const dispatch = useDispatch();
-    const orderPrice = useSelector((state) => state.stockOrderPriceSlice);
+    const orderPrice = useSelector((state: RootState) => state.stockOrderPriceSlice);
 
-    const [priceChangeTimer, setPriceChangeTimer] = useState(null);
+    const [priceChangeTimer, setPriceChangeTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
 
     const { askp1, askp2, askp3, askp4, askp5, askp6, askp7, askp8, askp9, askp10 } = stockInfo;
     const sellingInfo = [askp1, askp2, askp3, askp4, askp5, askp6, askp7, askp8, askp9, askp10];
@@ -29,7 +34,7 @@ const PriceSetting = (props) => {
     const defaultPrice = existSellingPrice[0]; //매도 호가중 첫번째
     const priceInterval = existSellingPrice[1] - existSellingPrice[0]; //단위 호가
 
-    const orderType = useSelector((state) => state.stockOrderTypeSlice);
+    const orderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
     const [orderPossibility, setOrderPossibility] = useState(true);
 
     const { bidp1, bidp2, bidp3, bidp4, bidp5, bidp6, bidp7, bidp8, bidp9, bidp10 } = stockInfo;
@@ -68,7 +73,7 @@ const PriceSetting = (props) => {
         dispatch(minusStockOrderPrice(priceInterval));
     };
 
-    const handleInputArrowBtn = (event) => {
+    const handleInputArrowBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "ArrowUp") {
             handlePlusOrderPrice();
         } else if (event.code === "ArrowDown") {
@@ -76,7 +81,7 @@ const PriceSetting = (props) => {
         }
     };
 
-    const handleWriteOrderPrice = (event) => {
+    const handleWriteOrderPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputPrice = event.target.value;
         const numberInputPrice = parseInt(inputPrice, 10);
 
@@ -133,54 +138,6 @@ const PriceSetting = (props) => {
 };
 
 export default PriceSetting;
-
-PriceSetting.propTypes = {
-    stockInfo: PropTypes.shape({
-        stockAsBiId: PropTypes.number.isRequired,
-        companyId: PropTypes.number.isRequired,
-        askp1: PropTypes.string.isRequired,
-        askp2: PropTypes.string.isRequired,
-        askp3: PropTypes.string.isRequired,
-        askp4: PropTypes.string.isRequired,
-        askp5: PropTypes.string.isRequired,
-        askp6: PropTypes.string.isRequired,
-        askp7: PropTypes.string.isRequired,
-        askp8: PropTypes.string.isRequired,
-        askp9: PropTypes.string.isRequired,
-        askp10: PropTypes.string.isRequired,
-        askp_rsqn1: PropTypes.string.isRequired,
-        askp_rsqn2: PropTypes.string.isRequired,
-        askp_rsqn3: PropTypes.string.isRequired,
-        askp_rsqn4: PropTypes.string.isRequired,
-        askp_rsqn5: PropTypes.string.isRequired,
-        askp_rsqn6: PropTypes.string.isRequired,
-        askp_rsqn7: PropTypes.string.isRequired,
-        askp_rsqn8: PropTypes.string.isRequired,
-        askp_rsqn9: PropTypes.string.isRequired,
-        askp_rsqn10: PropTypes.string.isRequired,
-        bidp1: PropTypes.string.isRequired,
-        bidp2: PropTypes.string.isRequired,
-        bidp3: PropTypes.string.isRequired,
-        bidp4: PropTypes.string.isRequired,
-        bidp5: PropTypes.string.isRequired,
-        bidp6: PropTypes.string.isRequired,
-        bidp7: PropTypes.string.isRequired,
-        bidp8: PropTypes.string.isRequired,
-        bidp9: PropTypes.string.isRequired,
-        bidp10: PropTypes.string.isRequired,
-        bidp_rsqn1: PropTypes.string.isRequired,
-        bidp_rsqn2: PropTypes.string.isRequired,
-        bidp_rsqn3: PropTypes.string.isRequired,
-        bidp_rsqn4: PropTypes.string.isRequired,
-        bidp_rsqn5: PropTypes.string.isRequired,
-        bidp_rsqn6: PropTypes.string.isRequired,
-        bidp_rsqn7: PropTypes.string.isRequired,
-        bidp_rsqn8: PropTypes.string.isRequired,
-        bidp_rsqn9: PropTypes.string.isRequired,
-        bidp_rsqn10: PropTypes.string.isRequired,
-    }).isRequired,
-    companyId: PropTypes.number.isRequired,
-};
 
 const Container = styled.div`
     position: relative;
@@ -273,7 +230,11 @@ const UnitContent = styled.div`
     background-color: #ffffff;
 `;
 
-const CheckTradingVolume = styled.div`
+export interface OrderPossibilityProps {
+    $orderPossibility: boolean;
+}
+
+const CheckTradingVolume = styled.div<OrderPossibilityProps>`
     position: absolute;
     top: 61px;
     left: 2px;

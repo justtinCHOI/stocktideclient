@@ -65,3 +65,17 @@ export interface StockItemProps {
   setShowChangePrice: (show: boolean) => void;
   showChangePrice: boolean;
 }
+
+export interface MoveStockItemProps {
+  company: {
+    companyId: number;
+    code: string;
+    korName: string;
+    stockPrice: string;
+    stockChangeAmount: string;
+    stockChangeRate: string;
+  };
+  setShowChangePrice: (show: boolean) => void;
+  showChangePrice: boolean;
+  onclick: () => void;
+}
