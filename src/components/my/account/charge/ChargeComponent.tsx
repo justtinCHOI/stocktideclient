@@ -1,48 +1,48 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
-// import useCustomCash from "@hooks/useCustomCash.ts";
 import useCustomCash from "@hooks/useCustomCash.ts"
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { ContentBottom } from "@assets/css/content";
-import PropTypes from "prop-types";
 import {requestPay} from "@api/paymentApi.tsx";
+import { AccountState, ChargeProps } from '@typings/account';
+import { RootState } from '../../../../store.tsx';
+import { CashSliceState } from '@slices/cashSlice.ts';
 
-
-const initAccountState = {
-    "cashId": '',
-    "accountNumber": '',
-    "money": '',
-    "dollar": ''
+const initAccountState: AccountState = {
+    cashId: 0,
+    accountNumber: '',
+    money: 0,
+    dollar: 0,
 }
 
-const ChargeComponent = ({ cashId }) => {
-    const cashState = useSelector(state => state.cashSlice);
+const ChargeComponent: React.FC<ChargeProps> = ({ cashId }) => {
+    const cashState = useSelector((state: RootState) => state.cashSlice);
     const { doUpdateCash } = useCustomCash();
-    const [account, setAccount] = useState(initAccountState);
-    const [chargeAmount, setChargeAmount] = useState(0);
-    const [isCharged, setIsCharged] = useState(false);
+    const [account, setAccount] = useState<AccountState>(initAccountState);
+    const [chargeAmount, setChargeAmount] = useState<number>(0);
+    const [isCharged, setIsCharged] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const chargedMoney = account.money + chargeAmount;
+    const chargedMoney = account.money ? account.money + chargeAmount: chargeAmount;
 
     useEffect(() => {
-        const selectedAccount = cashState.cashList.find(cash => cash.cashId == cashId);
+        const selectedAccount = cashState.cashList.find((cash: CashSliceState) => cash.cashId == cashId);
         if (selectedAccount) {
             setAccount(selectedAccount);
         }
     }, [cashState, cashId]);
 
-    const handleChargeAmountChange = (e) => {
+    const handleChargeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChargeAmount(Number(e.target.value));
     };
 
     const handleCharge = () => {
-        // doUpdateCash(cashId, chargedMoney, 0).then(() => {
-        //     setIsCharged(true);
-        //     setChargeAmount(0);
-        //     alert("충전되었습니다");
-        // });
+        doUpdateCash(cashId, chargedMoney, 0).then(() => {
+            setIsCharged(true);
+            setChargeAmount(0);
+            alert("충전되었습니다");
+        });
         requestPay()
     };
 
@@ -84,10 +84,6 @@ const ChargeComponent = ({ cashId }) => {
 };
 
 export default ChargeComponent;
-
-ChargeComponent.propTypes = {
-    cashId: PropTypes.number
-};
 
 const fadeIn = keyframes`
     from {

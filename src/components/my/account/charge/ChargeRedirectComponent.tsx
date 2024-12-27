@@ -1,4 +1,6 @@
-function ChargeRedirectComponent() {
+import { FC } from 'react';
+
+const ChargeRedirectComponent: FC = () => {
 
     return (
         <></>

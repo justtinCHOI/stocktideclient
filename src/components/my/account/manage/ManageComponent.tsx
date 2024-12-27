@@ -6,23 +6,25 @@ import { FaTimes } from "react-icons/fa";
 import useCustomCash from "@hooks/useCustomCash.ts";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
+import { AccountState } from '@typings/account';
+import { RootState } from '../../../../store.tsx';
 
-const initAccountsState = [
+const initAccountsState: AccountState[] = [
     {
-        "cashId": '',
-        "accountNumber": '',
-        "money": '',
-        "dollar": ''
+        cashId: 0,
+        accountNumber: '',
+        money: 0,
+        dollar: 0,
     },
 ]
-const initAccountIdState = "";
+const initAccountIdState = 0;
 
 const ManageComponent = () => {
-    const cashState = useSelector(state => state.cashSlice);
+    const cashState = useSelector((state: RootState) => state.cashSlice);
     const { doCreateCash, doGetCashList, doDeleteCash, doUpdateCashId } = useCustomCash();
     const [accounts, setAccounts] = useState(initAccountsState);
-    const [accountId, setAccountId] = useState(initAccountIdState);
-    const loginState = useSelector(state => state.loginSlice);
+    const [accountId, setAccountId] = useState<number>(initAccountIdState);
+    const loginState = useSelector((state: RootState) => state.loginSlice);
     const memberId = loginState.memberId;
     const navigate = useNavigate(); // 수정된 부분
 
@@ -37,7 +39,7 @@ const ManageComponent = () => {
         setAccountId(cashState.cashId);
     }, [cashState]);
 
-    const deleteAccount = (cashId) => {
+    const deleteAccount = (cashId: number) => {
         doDeleteCash(cashId).then(cashList => {
             console.log("cashList : ", cashList)
         });
@@ -49,14 +51,14 @@ const ManageComponent = () => {
         });
     };
 
-    const handleAccountClick = (cashId) => {
+    const handleAccountClick = (cashId: number) => {
         doUpdateCashId(cashId);
     };
 
-    const handleChargeClick = (cashId) => { // 수정된 부분
+    const handleChargeClick = (cashId: number) => { // 수정된 부분
         navigate(`../charge/${cashId}`);
     };
-    const handleExchangeClick = (cashId) => { // 수정된 부분
+    const handleExchangeClick = (cashId: number) => { // 수정된 부분
         navigate(`../exchange/${cashId}`);
     };
 
@@ -138,7 +140,11 @@ const AppContainer = styled.div`
     }
 `;
 
-const AccountBox = styled.div`
+interface AccountBoxProps {
+    $active: boolean;
+}
+
+const AccountBox = styled.div<AccountBoxProps>`
     display: flex;
     flex-direction: column;
     align-items: center;

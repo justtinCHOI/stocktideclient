@@ -1,27 +1,20 @@
-import { useState } from "react";
-import styled from "styled-components";
-import logo from "@assets/images/StockHolmImage.png";
-import star_icon from "@assets/icon/star_icon.png";
-import star_filled_icon from "@assets/icon/star_filled_icon.png";
-import PropTypes from "prop-types";
-import useCustomMove from "@hooks/useCustomMove.ts"
+import { FC, useState } from 'react';
+import styled from 'styled-components';
+import logo from '@assets/images/StockHolmImage.png';
+import useCustomMove from '@hooks/useCustomMove.ts';
 import { logoList } from '@utils/companyLogos.ts';
+import { StockItemProps } from '@typings/stock';
 
-const StockItem = ({ company }) => {
+const StockItem: FC<StockItemProps> = ({ company }) => {
 
     const isPositiveChange = parseFloat(company.stockChangeRate) > 0;
-    const logos = logoList;
-
-    const companyLogo = logos[company.korName] || logo;
+    const companyLogo = logoList[company.korName] || logo;
 
     const priceColor1 = isPositiveChange ? "#e22926" : "#2679ed";
     const priceColor2 = isPositiveChange ? "#e22926" : "#2679ed";
 
     const [showChangePrice] = useState(false);
     const {moveToRead} = useCustomMove();
-
-
-
 
     const handleItemClick = () => {
         moveToRead(company.companyId);
@@ -36,7 +29,7 @@ const StockItem = ({ company }) => {
             onClick={handleItemClick}
         >
             <LogoContainer>
-                <Logo src={companyLogo} alt="stock logo"  />
+                <Logo src={companyLogo} alt="stock logo"/>
             </LogoContainer>
             <StockInfo>
                 <StockName>{company.korName}</StockName>
@@ -54,19 +47,6 @@ const StockItem = ({ company }) => {
             </StockPriceSection>
         </StockItemWrapper>
     );
-};
-
-StockItem.propTypes = {
-    company: PropTypes.shape({
-        companyId: PropTypes.number.isRequired,
-        code: PropTypes.string.isRequired,
-        korName: PropTypes.string.isRequired,
-        stockPrice: PropTypes.string.isRequired,
-        stockChangeAmount: PropTypes.string.isRequired,
-        stockChangeRate: PropTypes.string.isRequired,
-    }).isRequired,
-    setShowChangePrice: PropTypes.func.isRequired,
-    showChangePrice: PropTypes.bool.isRequired,
 };
 
 const StockItemWrapper = styled.div`
@@ -104,23 +84,21 @@ const Logo = styled.img`
     margin-left: 10px;
     margin-right: 10px;
     position: absolute;
-    opacity: ${(props) => props.opacity};
 `;
 
-const FavoriteStar = styled.div`
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  background: url(${star_icon}) no-repeat center;
-  background-size: contain;
-  cursor: pointer;
-  opacity: ${(props) => props.opacity};
-`;
+// const FavoriteStar = styled.div`
+//   position: absolute;
+//   width: 28px;
+//   height: 28px;
+//   background: url(${star_icon}) no-repeat center;
+//   background-size: contain;
+//   cursor: pointer;
+// `;
 
-const FavoriteStarFilled = styled(FavoriteStar)`
-  background: url(${star_filled_icon}) no-repeat center;
-  background-size: contain;
-`;
+// const FavoriteStarFilled = styled(FavoriteStar)`
+//   background: url(${star_filled_icon}) no-repeat center;
+//   background-size: contain;
+// `;
 
 const StockInfo = styled.div`
   height: 100%;
@@ -154,12 +132,16 @@ const StockPriceSection = styled.div`
   margin-right: 10px;
 `;
 
-const StockPrice = styled.span`
+export interface ColorProps{
+    change: string;
+}
+
+const StockPrice = styled.span<ColorProps>`
   font-size: 15px;
   color: ${(props) => props.change};
 `;
 
-const StockChange = styled.span`
+const StockChange = styled.span<ColorProps>`
   color: ${(props) => props.change};
   cursor: pointer;
   font-size: 13px;

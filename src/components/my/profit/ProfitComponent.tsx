@@ -1,4 +1,6 @@
-function ProfitComponent() {
+import { FC } from 'react';
+
+const ProfitComponent: FC =() => {
 
 
     return (

@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import useCustomCash from "@hooks/useCustomCash.ts";
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { ContentBottom } from "@assets/css/content.tsx";
-import PropTypes from "prop-types";
+import { RootState } from '../../../../store.tsx';
+import { AccountState, ExchangeProps } from '@typings/account';
+import { CashSliceState } from '@slices/cashSlice.ts';
 
-const initAccountState = {
-    "cashId": '',
-    "accountNumber": '',
-    "money": '',
-    "dollar": ''
+const initAccountState: AccountState = {
+    cashId: 0,
+    accountNumber: '',
+    money: 0,
+    dollar: 0,
 }
 
 const exchangeRate  = 1386.83;
 
-const ExchangeComponent = ({ cashId }) => {
-    const cashState = useSelector(state => state.cashSlice);
+const ExchangeComponent: FC<ExchangeProps> = ({ cashId }) => {
+    const cashState = useSelector((state: RootState) => state.cashSlice);
     const { doUpdateCash } = useCustomCash();
     const [account, setAccount] = useState(initAccountState);
     const [exchangeCurrency, setExchangeCurrency] = useState("money");
@@ -27,7 +29,7 @@ const ExchangeComponent = ({ cashId }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const selectedAccount = cashState.cashList.find(cash => cash.cashId == cashId);
+        const selectedAccount = cashState.cashList.find((cash: CashSliceState) => cash.cashId == cashId);
         if (selectedAccount) {
             setAccount(selectedAccount);
         }
@@ -57,11 +59,11 @@ const ExchangeComponent = ({ cashId }) => {
         setExchangedDollar(Math.floor(newExchangedDollar));
     }, [exchangeAmount, exchangeCurrency, account.money, account.dollar]);
 
-    const handleExchangeAmountChange = (e) => {
+    const handleExchangeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setExchangeAmount(Number(e.target.value));
     };
 
-    const handleExchangeCurrencyChange = (e) => {
+    const handleExchangeCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setExchangeCurrency(e.target.value);
     };
 
@@ -123,10 +125,6 @@ const ExchangeComponent = ({ cashId }) => {
 };
 
 export default ExchangeComponent;
-
-ExchangeComponent.propTypes = {
-    cashId: PropTypes.number
-};
 
 const fadeIn = keyframes`
     from {

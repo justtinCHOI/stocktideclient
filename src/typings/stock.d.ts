@@ -52,3 +52,16 @@ export interface StockChartResponse {
   };
   loading: boolean;
 }
+
+export interface StockItemProps {
+  company: {
+    companyId: number;
+    code: string;
+    korName: string;
+    stockPrice: string;
+    stockChangeAmount: string;
+    stockChangeRate: string;
+  };
+  setShowChangePrice: (show: boolean) => void;
+  showChangePrice: boolean;
+}

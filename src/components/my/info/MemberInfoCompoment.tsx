@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import useCustomMove from "@hooks/useCustomMove.ts";
-import {useEffect, useState} from "react";
+import { FC, useEffect, useState } from 'react';
 import {useSelector} from "react-redux";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 
@@ -14,23 +13,25 @@ import {
     InputWrapper,
     Label
 } from "@assets/css/content.tsx";
+import { RootState } from '../../../store.tsx';
+import { MemberState } from '@typings/member';
 
 const initState = {
-    memberId : '',
+    memberId : 0,
     name : '',
     email: '',
     password: '',
     confirmPassword: '',
 }
 
-const MemberInfoComponent = () => {
+const MemberInfoComponent: FC = () => {
 
     // 화면 이동용 함수
     const {moveToMemberModify} = useCustomMove()
     const [showPassword, setShowPassword] = useState(false)
 
-    const [member, setMember] = useState(initState)
-    const loginInfo = useSelector(state => state.loginSlice)
+    const [member, setMember] = useState<MemberState>(initState)
+    const loginInfo = useSelector((state: RootState) => state.loginSlice)
 
     useEffect(() => {
         setMember({...loginInfo})
@@ -45,16 +46,6 @@ const MemberInfoComponent = () => {
 
         <>
             <Container>
-                {/*<FormRow display="hidden">*/}
-                {/*    <Label>id</Label>*/}
-                {/*    <Input*/}
-                {/*        name="memberId"*/}
-                {/*        type="text"*/}
-                {/*        value={member.memberId}*/}
-                {/*        readOnly*/}
-                {/*    />*/}
-                {/*</FormRow>*/}
-
                 <FormRow>
                     <Label>이름</Label>
                     <Input
@@ -90,8 +81,8 @@ const MemberInfoComponent = () => {
                     </InputWrapper>
                 </FormRow>
 
-                <FormRow justify="end">
-                    <Button type="button" onClick={() => moveToMemberModify(member.memberId)}>
+                <FormRow style={{justifyContent: 'end'}}>
+                    <Button type="button" onClick={() => moveToMemberModify()}>
                         Modify
                     </Button>
                 </FormRow>
@@ -100,8 +91,5 @@ const MemberInfoComponent = () => {
         </>
     )
 }
-MemberInfoComponent.propTypes = {
-    tno: PropTypes.number.isRequired
-};
 
 export default MemberInfoComponent;

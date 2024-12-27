@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef, FC } from 'react';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import useCustomLogin from "@hooks/useCustomLogin.ts";
 import { modifyMember, checkEmailDuplicate } from "@api/memberApi.js";
@@ -15,48 +15,53 @@ import {
     InputWrapper,
     Label
 } from "@assets/css/content.tsx";
+import { RootState } from '../../../store.tsx';
+import { MemberState } from '@typings/member';
 
 const initState = {
-    memberId : '',
+    memberId : 0,
     name : '',
     email: '',
     password: '',
     confirmPassword: '',
 }
 
-const MemberModifyComponent = () => {
+const MemberModifyComponent: FC = () => {
 
-    const [member, setMember] = useState(initState)
-    const loginInfo = useSelector(state => state.loginSlice)
+    const [member, setMember] = useState<MemberState>(initState)
+    const loginInfo = useSelector((state: RootState) => state.loginSlice)
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('')
-    const [result, setResult] = useState()
+    const [result, setResult] = useState<string | null>()
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const {doLogout, moveToLogin} = useCustomLogin()
 
-    const nameInputRef = useRef(null);
-    const emailInputRef = useRef(null);
-    const passwordInputRef = useRef(null);
-    const confirmPasswordInputRef = useRef(null);
+    const nameInputRef = useRef<HTMLInputElement>(null);
+    const emailInputRef = useRef<HTMLInputElement>(null);
+    const passwordInputRef = useRef<HTMLInputElement>(null);
+    const confirmPasswordInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         setMember({...loginInfo})
     },[loginInfo])
 
-    const handleChange = (e) => {
-        member[e.target.name] = e.target.value
-        setMember({...member})
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setMember(prev => ({
+            ...prev,
+            [name]: value
+        }));
 
         if (e.target.name === 'email') {
-            handleEmailChange(e.target.value)
+            handleEmailChange(e.target.value).then()
         } else if (e.target.name === 'confirmPassword') {
             handlePasswordChange()
         }
     }
 
-    const handleEmailChange = async (email) => {
+    const handleEmailChange = async (email: string) => {
         try {
             const isDuplicate = await checkEmailDuplicate(email)
             if (isDuplicate) {
@@ -81,37 +86,37 @@ const MemberModifyComponent = () => {
     const handleClickModify = () => {
         if (!member.name) {
             alert('이름을 입력해 주세요.')
-            nameInputRef.current.focus()
+            nameInputRef.current!.focus()
             return
         }
 
         if (!member.email) {
             alert('이메일을 입력해 주세요.')
-            emailInputRef.current.focus()
+            emailInputRef.current!.focus()
             return
         }
 
         if (!member.password) {
             alert('비밀번호를 입력해 주세요.')
-            passwordInputRef.current.focus()
+            passwordInputRef.current!.focus()
             return
         }
 
         if (!member.confirmPassword) {
             alert('비밀번호를 입력해 주세요.')
-            confirmPasswordInputRef.current.focus()
+            confirmPasswordInputRef.current!.focus()
             return
         }
 
         if (emailError) {
             alert('이메일을 확인해 주세요.')
-            emailInputRef.current.focus()
+            emailInputRef.current!.focus()
             return
         }
 
         if (passwordError) {
             alert('비밀번호가 일치하지 않습니다.')
-            confirmPasswordInputRef.current.focus()
+            confirmPasswordInputRef.current!.focus()
             return
         }
 
@@ -122,8 +127,7 @@ const MemberModifyComponent = () => {
             password: member.password,
         }
 
-        modifyMember(MemberModifyDTO).then(result => {
-            console.log(result);
+        modifyMember(MemberModifyDTO).then(() => {
             setResult('Modified')
         })
     }
@@ -202,7 +206,7 @@ const MemberModifyComponent = () => {
                     {passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
                 </FormRow>
 
-                <FormRow justify="end">
+                <FormRow style={{justifyContent: 'end'}}>
                     <Button type="button" onClick={handleClickModify}>
                         Modify
                     </Button>

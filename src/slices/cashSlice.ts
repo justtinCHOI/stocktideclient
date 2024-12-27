@@ -4,10 +4,15 @@ import {getLocalStorage, setLocalStorage} from "@utils/localStorageUtil.tsx"; //
 
 const LOCAL_STORAGE_KEY = 'cashState';
 
-const initState = {
+const initState: CashSliceState = {
     cashList: [],
-    cashId: ''
+    cashId: 0
 };
+
+export interface CashSliceState {
+    cashList: [];
+    cashId: number;
+}
 
 // LocalStorage에서 초기 상태를 로드합니다.
 const loadInitialState = () => {
