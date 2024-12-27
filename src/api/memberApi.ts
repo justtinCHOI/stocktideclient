@@ -1,6 +1,6 @@
 import axios from "axios"
 import jwtAxios from '@utils/jwtUtil.tsx';
-import { LoginParam } from '@typings/param';
+import { LoginParam } from '@typings/member';
 import { MemberModifyDTO } from '@typings/dto';
 
 export const API_SERVER_HOST = import.meta.env.VITE_API_URL;

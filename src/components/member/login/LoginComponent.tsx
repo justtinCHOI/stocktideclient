@@ -1,24 +1,28 @@
-import { useState } from "react";
+import React, { FC, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import useCustomLogin from "@hooks/useCustomLogin.ts";
 import KakaoLoginComponent from '@components/member/kakao/KakaoLoginComponent.tsx';
+import { LoginState } from '@typings/member';
 
-const initState = {
+const initState: LoginState = {
     email: '',
     password: ''
 };
 
-const LoginComponent = () => {
-    const [loginParam, setLoginParam] = useState({ ...initState });
+const LoginComponent: FC = () => {
+    const [loginParam, setLoginParam] = useState<LoginState>({ ...initState });
     const { doLogin } = useCustomLogin();
     const navigate = useNavigate();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: '/' } };
 
-    const handleChange = (e) => {
-        loginParam[e.target.name] = e.target.value;
-        setLoginParam({ ...loginParam });
+    const handleChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setLoginParam(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     const handleClickLogin = () => {
