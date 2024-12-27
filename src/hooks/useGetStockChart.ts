@@ -2,6 +2,7 @@ import {useState, useEffect, useMemo, useCallback} from "react";
 import useGetStockData from "./useGetStockData";
 import useGetStockInfo from "./useGetStockInfo";
 import axios from "axios";
+import { UseSocketReturn } from '@typings/hooks';
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -34,8 +35,7 @@ const averageDay = 10;
 //     volumes: number[][];
 // }
 
-// const useGetStockChart = (companyId: number) => {
-const useGetStockChart = (companyId) => {
+const useGetStockChart = (companyId: number) => {
     // const { stockPrice } = useGetStockData(companyId);// 봉 420개
     // const { stockInfo } = useGetStockInfo(companyId);// 회사정보 -> corpName
 

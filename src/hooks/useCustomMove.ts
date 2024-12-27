@@ -1,9 +1,10 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import { CustomMoveHook } from '@typings/hooks';
 
 
 //파라미터 값을 통해서 각페이지로 이동하는 함수
-function useCustomMove() {
+function useCustomMove(): CustomMoveHook {
     const navigate = useNavigate()
 
     //같은 페이지를 다시 호출했을 시 리스트를 다시 로드하기 위해서

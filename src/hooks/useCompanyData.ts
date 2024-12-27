@@ -1,10 +1,12 @@
 import {useQuery} from 'react-query';
 import axios from 'axios';
+import { CompanyDataResponse } from '@typings/hooks';
+import { CompanyResponseDto } from '@typings/dto.d.ts';
 
 const BASE_URL = 'http://localhost:8080';
 
 // 커스텀 훅 정의
-function useCompanyData(startCompanyId: number, endCompanyId: number) {
+function useCompanyData(startCompanyId: number, endCompanyId: number): CompanyDataResponse {
 
     // 데이터 가져오는 함수
     const fetchData = async (companyId: number) => {
@@ -26,7 +28,7 @@ function useCompanyData(startCompanyId: number, endCompanyId: number) {
     );
 
     // 필요한 데이터 추출 및 저장
-    const extractedData = data?.map((company) => {
+    const extractedData = data?.map((company: CompanyResponseDto) => {
         return {
             companyId: company.companyId,
             code: company.code,
@@ -38,7 +40,7 @@ function useCompanyData(startCompanyId: number, endCompanyId: number) {
     });
 
     // 필요한 데이터 추출 및 저장
-    const extractedData2 = data?.map((company) => {
+    const extractedData2 = data?.map((company: CompanyResponseDto) => {
         return {
             companyId: company.companyId,
             code: company.code,
