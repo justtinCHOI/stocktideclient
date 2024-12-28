@@ -3,7 +3,7 @@ import {useMutation, useQueryClient} from "react-query";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import {API_SERVER_HOST} from "@api/memberApi.js";
 import {useParams} from "react-router";
-import { RootState } from '../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const host = `${API_SERVER_HOST}/api/stock`;
 

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import useGetCash from "@hooks/useGetCash.ts";
 import {setStockOrderVolume} from "@slices/stockOrderVolumeSlice.ts";
 import {openDecisionWindow} from "@slices/decisionWindowSlice.ts";
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const availableMoneyText01 = "최대";
 const availableMoneyText02 = "원";

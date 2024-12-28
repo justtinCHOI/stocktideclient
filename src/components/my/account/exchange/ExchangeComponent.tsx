@@ -4,7 +4,7 @@ import useCustomCash from "@hooks/useCustomCash.ts";
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { ContentBottom } from "@assets/css/content.tsx";
-import { RootState } from '../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 import { AccountState, ExchangeProps } from '@typings/account';
 import { CashSliceState } from '@slices/cashSlice.ts';
 

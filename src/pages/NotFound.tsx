@@ -17,7 +17,7 @@ export const NotFoundWrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: calc(100vh - 38px);
-  background: rgba(20, 10, 110);
+  background: white;
   color: #ffffff;
   text-align: center;
 `;
@@ -25,13 +25,13 @@ export const NotFoundWrapper = styled.div`
 export const NotFoundText = styled.h1`
   font-size: 2rem;
   margin-bottom: 1rem;
-  //color: #ffcccb; // 부드러운 레드 색상으로 강조
+  color: black; // 부드러운 레드 색상으로 강조
 `;
 
 export const NotFoundBackButton = styled(Link)`
   margin-top: 1.5rem;
   padding: 0.5rem 1rem;
-  background-color: rgba(10, 0, 90);
+  background-color:  black;
   color: #ffffff;
   border-radius: 5px;
   text-decoration: none;

@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { FC, useState } from 'react';
 import PropTypes from 'prop-types';
+import { StyledLink } from '@assets/css/common';
 
 interface MenuComponentProps {
     menus: string[];
@@ -32,7 +32,7 @@ const MenuComponent: FC<MenuComponentProps> = ({ menus, urls }) => {
                                 $active={activeMenu === index}
                                 onClick={() => handleMenuClick(index)}
                             >
-                                <Link to={urls[index]}>{menu}</Link>
+                                <StyledLink to={urls[index]}>{menu}</StyledLink>
                             </SecondMenuSingle>
                         ))}
                     </SecondMenuNav>
@@ -49,7 +49,7 @@ const MenuComponent: FC<MenuComponentProps> = ({ menus, urls }) => {
                                 $extive={activeMenu === index}
                                 onClick={() => handleMenuClick(index)}
                             >
-                                <Link to={urls[index]}>{menu}</Link>
+                                <StyledLink to={urls[index]}>{menu}</StyledLink>
                             </SecondMenuSingle>
                         ))}
                     </SecondMenuExpanded>

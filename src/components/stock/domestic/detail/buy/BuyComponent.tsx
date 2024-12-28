@@ -5,7 +5,7 @@ import useGetStockInfo from '@hooks/useGetStockInfo.ts';
 import {dummyLogo, logoList} from "@utils/companyLogos.ts"
 import StockOrder from "./StockOrder.tsx";
 import LoginRequestIndicator from "@components/common/LoginRequestIndicator";
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 import { FC } from 'react';
 
 interface BuyComponentProps {

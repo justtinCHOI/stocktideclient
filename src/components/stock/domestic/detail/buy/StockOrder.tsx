@@ -9,7 +9,7 @@ import StockOrderSetting from "./StockOrderSetting";
 
 import {dummyLogo, logoList} from "@utils/companyLogos.ts";
 import { FC } from 'react';
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 import { OrderTypeProps } from '@components/stock/domestic/detail/buy/OrderDecisionBtn.tsx';
 
 const orderFailureMessage01 = "주문 실패";

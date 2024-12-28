@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FC } from 'react';
+import { StyledLink } from '@assets/css/common';
 const BasicMenu: FC = () => {
     return (
         <Footer>
-            <FooterHome><Link to={'/welcome'}>홈</Link> </FooterHome>
+            <FooterHome><StyledLink to={'/welcome'}>홈</StyledLink> </FooterHome>
             <FooterNav>
                 <FooterMenu>
-                    <FooterMenuItem><Link to={'/stock/domestic/'}>국내주식</Link> </FooterMenuItem>
-                    <FooterMenuItem><Link to={'/stock/overseas/'}>해외주식</Link></FooterMenuItem>
-                    <FooterMenuItem><Link to={'/my/'}>마이페이지</Link></FooterMenuItem>
+                    <FooterMenuItem><StyledLink to={'/stock/domestic/'}>국내주식</StyledLink> </FooterMenuItem>
+                    <FooterMenuItem><StyledLink to={'/stock/overseas/'}>해외주식</StyledLink></FooterMenuItem>
+                    <FooterMenuItem><StyledLink to={'/my/'}>마이페이지</StyledLink></FooterMenuItem>
                 </FooterMenu>
             </FooterNav>
         </Footer>

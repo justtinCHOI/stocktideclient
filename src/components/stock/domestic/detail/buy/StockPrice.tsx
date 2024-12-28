@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, FC } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setStockOrderPrice } from "@slices/stockOrderPriceSlice.ts";
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const changeRateUnit = `%`;
 

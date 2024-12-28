@@ -3,10 +3,10 @@ import Main from "@components/welcome/main/Main.tsx";
 import Footer from "@components/welcome/Footer.tsx";
 import styled from "styled-components";
 import {FaSearch} from "react-icons/fa";
-import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import useCustomLogin from "@hooks/useCustomLogin.ts";
-import { RootState } from '../../store.tsx';
+import { RootState } from '@/store.tsx';
+import { StyledLink } from '@assets/css/common';
 
 const Welcome = () => {
 
@@ -24,7 +24,7 @@ const Welcome = () => {
                 <WelcomeMessage>반가워요! StockFish 입니다.</WelcomeMessage>
                     { ! loginState.email ?
                         <WelcomeLogin>
-                            <Link to={'/member/login'}>Login</Link>
+                            <StyledLink to={'/member/login'}>Login</StyledLink>
                         </WelcomeLogin>
                         :
                         <WelcomeLogin

@@ -17,9 +17,7 @@ const BasicLayout: FC = () => {
 }
 
 const Container = styled.div`
-    //background-color: #f7fafc;
-    background-color: red;
-    border: 5px red;
+    background-color: #f7fafc;
     height: 100vh;
     width: 100vw;
     display: flex;

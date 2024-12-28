@@ -10,7 +10,7 @@ const itemRouter = () => {
     return[
         {
             path: '',
-            element: <Navigate replace={true} to='hold' />,
+            element: <Navigate replace={true} to='entire' />,
         },{
             path: 'entire',
             element: <Suspense fallback={Loading}><EntirePage/></Suspense>,

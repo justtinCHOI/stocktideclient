@@ -7,7 +7,7 @@ import {useParams} from "react-router";
 import PriceSetting from "./PriceSetting.js";
 import VolumeSetting from "./VolumeSetting.tsx";
 import OrderDecisionBtn, { OrderTypeProps } from './OrderDecisionBtn.js';
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const orderType01 = "매수";
 const orderType02 = "매도";

@@ -9,7 +9,7 @@ import {
 } from "@slices/stockOrderVolumeSlice.ts";
 import useGetCash from "@hooks/useGetCash.ts";
 import useGetHoldingStock from "@hooks/useGetHoldingStock.ts";
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 import { OrderTypeProps } from '@components/stock/domestic/detail/buy/OrderDecisionBtn.tsx';
 
 const volumeSettingTitle = "수량";

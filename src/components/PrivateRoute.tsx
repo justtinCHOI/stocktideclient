@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '@/store';
 
 interface PrivateRouteProps {
   children: ReactNode;

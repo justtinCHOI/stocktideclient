@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {createCashAsync, deleteCashAsync, getCashListAsync, setCashId, updateCashAsync} from "@slices/cashSlice.ts";
 import {useNavigate} from "react-router-dom";
-import { AppDispatch, RootState } from '../store.tsx';
+import { AppDispatch, RootState } from '@/store.tsx';
 import { CustomCashHook } from '@typings/hooks';
 
 const useCustomCash = (): CustomCashHook => {

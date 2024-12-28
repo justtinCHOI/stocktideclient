@@ -4,7 +4,7 @@ import styled from "styled-components";
 import StockPrice from "./StockPrice.js";
 import {useParams} from "react-router";
 import { OrderTypeProps } from '@components/stock/domestic/detail/buy/OrderDecisionBtn.tsx';
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const StockPriceList = () => {
     // const companyId = useSelector((state) => state.companyId);

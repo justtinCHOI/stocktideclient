@@ -7,7 +7,7 @@ import {
     setStockOrderPrice
 } from "@slices/stockOrderPriceSlice.ts";
 import { StockAsBiResponseDto } from '@typings/dto';
-import { RootState } from '../../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const priceSettingTitle = "가격";
 const unitText = "원";

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import useGetStockData from './useGetStockData';
 import useGetStockInfo from './useGetStockInfo';
 import axios from 'axios';
-import { RootState } from '../store.tsx';
+import { RootState } from '@/store.tsx';
 import { useSelector } from 'react-redux';
 import { ChartData, CompareChartData, StockMinData } from '@typings/stock';
 

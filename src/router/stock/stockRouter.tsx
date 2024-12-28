@@ -9,7 +9,7 @@ const stockRouter = () => {
     return[
         {
             path: '',
-            element: <Navigate replace={true} to='items' />,
+            element: <Navigate replace={true} to='domestic' />,
         },{
             path: 'domestic',
             element: <Suspense fallback={Loading}><Domestic/></Suspense>,

@@ -7,7 +7,7 @@ import useCustomCash from "@hooks/useCustomCash.ts";
 import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { AccountState } from '@typings/account';
-import { RootState } from '../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 
 const initAccountsState: AccountState[] = [
     {

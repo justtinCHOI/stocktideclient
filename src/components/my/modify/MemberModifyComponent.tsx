@@ -15,7 +15,7 @@ import {
     InputWrapper,
     Label
 } from "@assets/css/content.tsx";
-import { RootState } from '../../../store.tsx';
+import { RootState } from '@/store.tsx';
 import { MemberState } from '@typings/member';
 
 const initState = {

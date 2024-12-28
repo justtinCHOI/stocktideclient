@@ -1,20 +1,20 @@
-import {Link} from "react-router-dom";
 import {getKakaoLoginLink} from "@api/kakaoApi.js";
 import kakaoLogo from "@assets/images/KakaoLogo.svg";
 import styled from "styled-components";
 import { FC } from 'react';
+import { StyledLink } from '@assets/css/common';
 
 const KakaoLoginComponent: FC = () => {
 
     const link = getKakaoLoginLink()
 
     return (
-        <Link to={link}>
+        <StyledLink to={link}>
             <KakaoButton>
                 <LogoImage src={kakaoLogo} alt="Kakao Logo"/>
                 KAKAO LOGIN
             </KakaoButton>
-        </Link>
+        </StyledLink>
     )
 }
 

@@ -6,7 +6,7 @@ import styled, { keyframes } from 'styled-components';
 import { ContentBottom } from "@assets/css/content";
 import {requestPay} from "@api/paymentApi";
 import { AccountState, ChargeProps } from '@typings/account';
-import { RootState } from '../../../../store.tsx';
+import { RootState } from '@/store.tsx';
 import { CashSliceState } from '@slices/cashSlice';
 
 const initAccountState: AccountState = {

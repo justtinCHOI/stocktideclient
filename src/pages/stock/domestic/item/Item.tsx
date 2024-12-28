@@ -5,7 +5,7 @@ import {ContentBelowMenu, IncludeInformationDiv, OutletDiv} from "@assets/css/me
 const Item = () => {
 
   const Menus = ['전체종목', '보유종목', '관심종목', '회사정보'];
-  const Urls = ['entire', 'hold', 'watch', '/stock/article/read/2'];
+  const Urls = ['entire', 'hold', 'watch', '/stock/domestic/detail/buy/2'];
 
   return (
     <IncludeInformationDiv $top={5}>
