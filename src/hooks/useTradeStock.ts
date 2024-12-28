@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import {useMutation, useQueryClient} from "react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import {API_SERVER_HOST} from "@api/memberApi.js";
 import {useParams} from "react-router";
@@ -17,21 +17,34 @@ const useTradeStock = () => {
     const memberId = loginState.memberId;
 
     const queryClient = useQueryClient();
-    return useMutation(
-        async () => postOrderRequest(orderType, numericCompanyId, orderPrice, orderVolume, memberId),
-        {
-            onSuccess: () => {
-                //현금 데이터, 보유한 주식 데이터,  주문 기록 데이터
-                queryClient.invalidateQueries("cash").then();
-                queryClient.invalidateQueries("holdingStock").then();
-                queryClient.invalidateQueries("orderRecord").then();
-
-                // 중복되는 커스텀훅 -> 일단 기능구현 위해 처리함
-                queryClient.invalidateQueries("stockHolds").then();
-                queryClient.invalidateQueries("money").then();
-            },
+    return useMutation({
+        mutationFn: async () => postOrderRequest(
+          orderType,
+          numericCompanyId,
+          orderPrice,
+          orderVolume,
+          memberId
+        ),
+        onSuccess: () => {
+            // 관련 쿼리들 무효화
+            queryClient.invalidateQueries({
+                queryKey: ['cash']
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['holdingStock']
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['orderRecord']
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['stockHolds']
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['money']
+            });
         }
-    );
+    });
+
 };
 
 export default useTradeStock;

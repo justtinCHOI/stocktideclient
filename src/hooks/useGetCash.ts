@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import { API_SERVER_HOST } from "@api/memberApi.js";
@@ -17,13 +17,13 @@ const useGetCash = (): GetCashResponse => {
     const isLogin = !!loginState.email;
     const memberId = loginState.memberId;
 
-    const { data, isLoading, isError } = useQuery(
-        ["cash", memberId],
-        () => getCashData(memberId),
-        {
-            enabled: isLogin,
-        }
-    );
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['cash', memberId],
+        queryFn: () => getCashData(memberId),
+        enabled: isLogin,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false
+    });
 
     return { cashData: data, cashLoading: isLoading, cashError: isError };
 };

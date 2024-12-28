@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import { API_SERVER_HOST } from "@api/memberApi.js";
@@ -17,13 +17,13 @@ const useGetHoldingStock = (companyId: number) => {
     const isLogin = !!loginState.email;
     const memberId = loginState.memberId;
 
-    const { data, isLoading, isError } = useQuery(
-        ["holdingStock", memberId, companyId],
-        () => getHoldingStock(memberId, companyId),
-        {
-            enabled: isLogin,
-        }
-    );
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['holdingStocks', companyId],
+        queryFn: () => getHoldingStock(memberId, companyId),
+        enabled: isLogin,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: true
+    });
 
     return { holdingStockData: data, holdingStockLoading: isLoading, holdingStockError: isError };
 };

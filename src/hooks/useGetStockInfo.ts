@@ -1,4 +1,4 @@
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import {useEffect, useState} from "react";
 
@@ -26,16 +26,18 @@ const useGetStockInfo = (companyId: number) => {
         } else if (30 < minute && minute < 60) {
             const delayTime = (60 - minute) * 60000;
             setTimeout(() => {
-                refetch();
+                refetch().then();
                 setAutoRefetch(true);
             }, delayTime);
         }
     }, []);
 
-    const { data, isLoading, error, refetch } = useQuery(`stockInfo${companyId} ${queryKey}}`, () => getStockInfo(companyId), {
-    // const { data, isLoading, error } = useQuery(`stockInfo${companyId}}`, () => getStockInfo(companyId), {
-        enabled: true, //쿼리가 활성화 상태인지 여부, 항상 true로 설정
-        refetchInterval: autoRefetch ? 60000 * 10 : false, // 정각 혹은 30분에 맞춰서 10분 마다 데이터 리패칭
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ['stockInfo', companyId, queryKey],
+        queryFn: () => getStockInfo(companyId),
+        enabled: true,
+        staleTime: 1000 * 60 * 5,
+        refetchInterval: autoRefetch ? 60000 * 10 : false
     });
 
     return { stockInfo: data, stockInfoLoading: isLoading, stockInfoError: error };

@@ -1,5 +1,5 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
-import ErrorBoundary from "@components/ErrorBoundary.tsx";
+// import ErrorBoundary from "@components/ErrorBoundary.tsx";
 import {lazy, Suspense} from "react";
 import stockRouter from "@router/stock/stockRouter.tsx";
 import myPageRouter from "@router/mypage/myPageRouter.tsx";
@@ -25,11 +25,11 @@ const root = createBrowserRouter([
     {
         path: '',
         element:
-            <ErrorBoundary>
+            // <ErrorBoundary>
                 <Suspense fallback={Loading}>
                     <BasicLayout/>
-                </Suspense>
-            </ErrorBoundary>,
+                </Suspense>,
+            // </ErrorBoundary>,
         children: [
             {
                 path: '',

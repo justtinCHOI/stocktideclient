@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -22,27 +22,37 @@ const useGetStockData = (companyId: number) => {
         } else if (0 < minute && minute < 30) {
             const delayTime = (30 - minute) * 60000;
             setTimeout(() => {
-                refetch();
+                refetch().then();
                 setAutoRefetch(true);
             }, delayTime);
         } else if (30 < minute && minute < 60) {
             const delayTime = (60 - minute) * 60000;
             setTimeout(() => {
-                refetch();
+                refetch().then();
                 setAutoRefetch(true);
             }, delayTime);
         }
     }, []);
 
-    const { data, isLoading, error, refetch } = useQuery(`chartData${companyId} ${queryKey}`, () => getChartData(companyId), {
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey: ['stockData', companyId, queryKey],
+        queryFn: () => getChartData(companyId),
+        staleTime: 1000 * 60 * 5,
         enabled: true,
-        refetchInterval: autoRefetch ? 60000 * 10 : false, // 정각 혹은 30분에 맞춰서 10분 마다 데이터 리패칭
-        onSuccess: () => {
-            queryClient.invalidateQueries("cash");
-            queryClient.invalidateQueries("holdingStock");
-            queryClient.invalidateQueries("orderRecord");
-        },
+        refetchInterval: autoRefetch ? 60000 * 10 : false,
+        meta: {
+            errorMessage: `Failed to fetch stock data for company ${companyId}`
+        }
     });
+
+    useEffect(() => {
+        if (data) {
+            // Invalidate related queries
+            queryClient.invalidateQueries({ queryKey: ['cash'] }).then();
+            queryClient.invalidateQueries({ queryKey: ['holdingStock'] }).then();
+            queryClient.invalidateQueries({ queryKey: ['orderRecord'] }).then();
+        }
+    }, [data, queryClient]);
 
     return { stockPrice: data, stockPriceLoading: isLoading, stockPriceError: error };
 };

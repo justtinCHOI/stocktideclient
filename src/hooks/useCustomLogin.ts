@@ -2,7 +2,8 @@ import {useNavigate} from "react-router-dom";
 import {loginPostAsync, logout} from "@slices/loginSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
 import { AppDispatch, RootState } from '@/store.tsx';
-import { CustomLoginHook, LoginParam } from '@typings/hooks';
+import { CustomLoginHook } from '@typings/hooks';
+import { LoginParam } from '@typings/member';
 
 const useCustomLogin = (): CustomLoginHook => {
   const navigate = useNavigate();
