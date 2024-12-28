@@ -50,5 +50,4 @@ function loadMemberLocalStorage() {
 }
 
 export const { logout, loginSuccess, loginRequest, loginFailure } = memberSlice.actions;
-
-export default memberSlice.reducer;
+export const memberReducer =  memberSlice.reducer;

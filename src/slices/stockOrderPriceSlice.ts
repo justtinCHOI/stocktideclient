@@ -17,4 +17,3 @@ const stockOrderPriceSlice = createSlice({
 
 export const { setStockOrderPrice, plusStockOrderPrice, minusStockOrderPrice } = stockOrderPriceSlice.actions;
 export const stockOrderPriceReducer = stockOrderPriceSlice.reducer;
-export default stockOrderPriceSlice.reducer;

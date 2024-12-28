@@ -13,4 +13,3 @@ const decisionWindowSlice = createSlice({
 
 export const { openDecisionWindow, closeDecisionWindow } = decisionWindowSlice.actions;
 export const decisionWindowReducer = decisionWindowSlice.reducer;
-export default decisionWindowSlice.reducer;

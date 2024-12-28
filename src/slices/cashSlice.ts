@@ -98,5 +98,4 @@ const cashSlice = createSlice({
 });
 
 export const { setCashList, setCashId } = cashSlice.actions;
-
-export default cashSlice.reducer;
+export const cashReducer = cashSlice.reducer;

@@ -14,4 +14,3 @@ const stockOrderVolumeSlice = createSlice({
 
 export const { setStockOrderVolume, plusStockOrderVolume, minusStockOrderVolume } = stockOrderVolumeSlice.actions;
 export const stockOrderVolumeReducer = stockOrderVolumeSlice.reducer;
-export default stockOrderVolumeSlice.reducer;

@@ -1,31 +1,31 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import companyIdSlice from "./slices/companyIdSlice";
-import memberReducer from "@slices/memberSlice";
-import cashSlice from "./slices/cashSlice";
-import stockOrderTypeSlice from "./slices/stockOrderTypeSlice";
-import stockOrderPriceSlice from "./slices/stockOrderPriceSlice";
-import stockOrderVolumeSlice from "./slices/stockOrderVolumeSlice";
-import decisionWindowSlice from "./slices/decisionWindowSlice";
-import compareIdSlice from "./slices/companyIdSlice";
 import rootSaga from '@/store/sagas/rootSaga';
+import { memberReducer } from '@slices/memberSlice';
+import { companyIdReducer } from '@slices/companyIdSlice';
+import { compareIdReducer } from '@slices/compareIdSlice';
+import { cashReducer } from '@slices/cashSlice';
+import { stockOrderTypeReducer } from '@slices/stockOrderTypeSlice';
+import { stockOrderPriceReducer } from '@slices/stockOrderPriceSlice';
+import { stockOrderVolumeReducer } from '@slices/stockOrderVolumeSlice';
+import { decisionWindowReducer } from '@slices/decisionWindowSlice';
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
     memberSlice: memberReducer,
-    cashSlice,
-    companyIdSlice,
-    stockOrderTypeSlice,
-    stockOrderPriceSlice,
-    stockOrderVolumeSlice,
-    decisionWindowSlice,
-    compareIdSlice,
+    companyIdSlice: companyIdReducer,
+    compareIdSlice: compareIdReducer,
+    cashSlice: cashReducer,
+    stockOrderTypeSlice: stockOrderTypeReducer,
+    stockOrderPriceSlice: stockOrderPriceReducer,
+    stockOrderVolumeSlice: stockOrderVolumeReducer,
+    decisionWindowSlice: decisionWindowReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: false, // Thunk 비활성화
-      serializableCheck: false, // Saga에서 Promise 사용을 위해 비활성화
+      serializableCheck: false, // Saga 에서 Promise 사용을 위해 비활성화
     }).concat(sagaMiddleware),
 });
 

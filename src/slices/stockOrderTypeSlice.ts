@@ -18,4 +18,3 @@ const stockOrderTypeSlice = createSlice({
 
 export const { orderTypeBuying, orderTypeSelling } = stockOrderTypeSlice.actions;
 export const stockOrderTypeReducer = stockOrderTypeSlice.reducer;
-export default stockOrderTypeSlice.reducer;
