@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginPost } from "@api/memberApi.js";
 import { getLocalStorage, setLocalStorage, removeLocalStorage } from "@utils/localStorageUtil.tsx";
 import { LoginParam } from '@typings/member';
@@ -20,13 +20,17 @@ const loadMemberLocalStorage = () => {
 };
 
 const loginSlice = createSlice({
-    name: 'LoginSlice',
+    name: 'loginSlice',
     initialState: loadMemberLocalStorage() || initState,
     reducers: {
-        login: ( action) => {
+        login: (state, action) => {
+            if (!action.payload) return state;
+            console.log('Login reducer payload:', action.payload.email);
             setLocalStorage("member", action.payload, 1);
-            console.log("login action.payload.email: ", action.payload.email);
-            return action.payload;
+            return {
+                ...state,
+                ...action.payload.email,
+            };
         },
         logout: () => {
             removeLocalStorage("member");

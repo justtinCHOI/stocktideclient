@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from 'axios';
+
 const API_SERVER_HOST = import.meta.env.VITE_API_URL;
 
 const rest_api_key =`8f46337bde852c2d39573c6c60acfd65` //REST키값
@@ -11,11 +12,7 @@ const access_token_url =`https://kauth.kakao.com/oauth/token` //추가
 
 //1. 인가코드 얻기
 export const getKakaoLoginLink = () => {
-
-  const kakaoURL = `${auth_code_path}?client_id=${rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
-
-  return kakaoURL
-
+  return `${auth_code_path}?client_id=${rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
 }
 
 //2. accessToken 받기

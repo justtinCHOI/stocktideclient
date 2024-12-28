@@ -1,4 +1,4 @@
-export const setLocalStorage = (key, value, days) => {
+export const setLocalStorage = (key: string, value: string, days: number) => {
     const expires = new Date();
     expires.setUTCDate(expires.getUTCDate() + days);
 
@@ -10,7 +10,7 @@ export const setLocalStorage = (key, value, days) => {
     localStorage.setItem(key, JSON.stringify(item));
 };
 
-export const getLocalStorage = (key) => {
+export const getLocalStorage = (key: string) => {
     const itemStr = localStorage.getItem(key);
     if (!itemStr) {
         return null;
@@ -27,9 +27,8 @@ export const getLocalStorage = (key) => {
     return item.value;
 };
 
-export const removeLocalStorage = (key) => {
+export const removeLocalStorage = (key: string) => {
 
     localStorage.removeItem(key);
 
 };
-

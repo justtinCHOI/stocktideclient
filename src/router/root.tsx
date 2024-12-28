@@ -33,7 +33,7 @@ const root = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Navigate replace to='/home' />,
+                element: <Navigate replace to='/welcome' />,
             },
             {
                 path: 'welcome',
@@ -75,7 +75,7 @@ const root = createBrowserRouter([
                 children: memberRouter()
             },
             {
-                path: '*', // 모든 경로가 처리되지 않을 경우
+                path: '*',
                 element: (
                   <Suspense fallback={Loading}>
                       <NotFound />

@@ -6,10 +6,11 @@ import {FaSearch} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import useCustomLogin from "@hooks/useCustomLogin.ts";
+import { RootState } from '../../store.tsx';
 
 const Welcome = () => {
 
-    const loginState = useSelector((state) => state.loginSlice);
+    const loginState = useSelector((state: RootState) => state.loginSlice);
     const {doLogout, moveToPath} = useCustomLogin()
     const handleClickLogout = () => {
         doLogout()
@@ -23,7 +24,7 @@ const Welcome = () => {
                 <WelcomeMessage>반가워요! StockFish 입니다.</WelcomeMessage>
                     { ! loginState.email ?
                         <WelcomeLogin>
-                            <Link to={'/member/logins'}>Login</Link>
+                            <Link to={'/member/login'}>Login</Link>
                         </WelcomeLogin>
                         :
                         <WelcomeLogin

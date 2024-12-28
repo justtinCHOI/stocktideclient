@@ -13,7 +13,7 @@ const KakaoRedirect = lazy(() => import("@pages/member/kakao/KakaoRedirect"))
             element: <Navigate replace={true} to='login' />,
         },
         {
-            path: "logins",
+            path: "login",
             element: <Suspense fallback={Loading}><Login/></Suspense>
         },
         {

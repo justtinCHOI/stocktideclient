@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { getLocalStorage, setLocalStorage } from "./localStorageUtil.tsx"; // localStorage 유틸리티 파일로 변경
 const API_SERVER_HOST = import.meta.env.VITE_API_URL;
 
 const jwtAxios = axios.create();
 
-const refreshJWT = async (accessToken, refreshToken) => {
+const refreshJWT = async (accessToken: string, refreshToken: string) => {
     const host = API_SERVER_HOST;
     const header = { headers: { "Authorization": `Bearer ${accessToken}` } };
 
@@ -13,7 +13,7 @@ const refreshJWT = async (accessToken, refreshToken) => {
     return res.data;
 };
 
-const beforeReq = (config) => {
+const beforeReq = (config: InternalAxiosRequestConfig) => {
     const memberInfo = getLocalStorage("member");
 
     if (!memberInfo) {
@@ -31,15 +31,12 @@ const beforeReq = (config) => {
     return config;
 };
 
-const requestFail = (err) => {
-
-    console.log("requestFail ",err)
-
+const requestFail = (err: any) => {
     return Promise.reject(err);
 
 };
 
-const beforeRes = async (res) => {
+const beforeRes = async (res: AxiosResponse) => {
     const data = res.data;
 
     if (data && data.error === 'ERROR_ACCESS_TOKEN') {
@@ -62,7 +59,7 @@ const beforeRes = async (res) => {
     return res;
 };
 
-const responseFail = (err) => {
+const responseFail = (err: any) => {
     return Promise.reject(err);
 };
 

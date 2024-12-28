@@ -1,13 +1,19 @@
 import { FC } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import root from "./router/root";
-import ErrorBoundary from '@components/ErrorBoundary';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import store from './store.tsx';
+import root from '@router/root.tsx';
+
+const queryClient = new QueryClient();
 
 const App: FC = () => {
   return (
-    <ErrorBoundary>
-      <RouterProvider router={root} />
-    </ErrorBoundary>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={root} />
+      </QueryClientProvider>
+    </Provider>
   );
 };
 
