@@ -1,44 +1,111 @@
 import { useDispatch, useSelector } from "react-redux";
-import {createCashAsync, deleteCashAsync, getCashListAsync, setCashId, updateCashAsync} from "@slices/cashSlice.ts";
-import {useNavigate} from "react-router-dom";
-import { AppDispatch, RootState } from '@/store.tsx';
+import {
+    getCashListRequest,
+    createCashRequest,
+    deleteCashRequest,
+    updateCashRequest,
+    setCashId
+} from "@slices/cashSlice";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch, RootState, store } from '@/store';
 import { CustomCashHook } from '@typings/hooks';
+import { Cash } from '@typings/entity';
 
 const useCustomCash = (): CustomCashHook => {
     const dispatch = useDispatch<AppDispatch>();
     const cashState = useSelector((state: RootState) => state.cashSlice);
     const navigate = useNavigate();
 
-    const doCreateCash = async (memberId: number) => {
-        const action = await dispatch(createCashAsync(memberId));
-        return action.payload;
+    const doCreateCash = async (memberId: number): Promise<Cash> => {
+        dispatch(createCashRequest(memberId));
+        return new Promise((resolve, reject) => {
+            const unsubscribe = store.subscribe(() => {
+                const state = store.getState().cashSlice;
+                if (!state.loading) {
+                    unsubscribe();
+                    if (state.error) {
+                        reject(state.error);
+                    } else {
+                        resolve(state.cashList[state.cashList.length - 1]);
+                    }
+                }
+            });
+        });
     }
 
-    const doGetCashList = async (memberId: number) => {
-        const action = await dispatch(getCashListAsync(memberId));
-        return action.payload;
+    const doGetCashList = async (memberId: number): Promise<Cash[]> => {
+        dispatch(getCashListRequest(memberId));
+        return new Promise((resolve, reject) => {
+            const unsubscribe = store.subscribe(() => {
+                const state = store.getState().cashSlice;
+                if (!state.loading) {
+                    unsubscribe();
+                    if (state.error) {
+                        reject(state.error);
+                    } else {
+                        resolve(state.cashList);
+                    }
+                }
+            });
+        });
     }
 
-    const doDeleteCash = async (cashId: number) => {
-        const action = await dispatch(deleteCashAsync(cashId));
-        return action.payload;
+    const doDeleteCash = async (cashId: number): Promise<number> => {
+        dispatch(deleteCashRequest(cashId));
+        return new Promise((resolve, reject) => {
+            const unsubscribe = store.subscribe(() => {
+                const state = store.getState().cashSlice;
+                if (!state.loading) {
+                    unsubscribe();
+                    if (state.error) {
+                        reject(state.error);
+                    } else {
+                        resolve(cashId);
+                    }
+                }
+            });
+        });
     }
 
-    const doUpdateCash = async (cashId: number, money: number, dollar: number) => {
-        console.log("doUpdateCash cashId money : ", cashId, money, dollar);
-        const action = await dispatch(updateCashAsync({ cashId, money , dollar}));
-        return action.payload;
+    const doUpdateCash = async (cashId: number, money: number, dollar: number): Promise<Cash> => {
+        dispatch(updateCashRequest({ cashId, money, dollar }));
+        return new Promise((resolve, reject) => {
+            const unsubscribe = store.subscribe(() => {
+                const state = store.getState().cashSlice;
+                if (!state.loading) {
+                    unsubscribe();
+                    if (state.error) {
+                        reject(state.error);
+                    } else {
+                        const updatedCash = state.cashList.find((cash: Cash) => cash.cashId === cashId);
+                        if (updatedCash) {
+                            resolve(updatedCash);
+                        } else {
+                            reject(new Error('Updated cash not found'));
+                        }
+                    }
+                }
+            });
+        });
     }
 
     const doUpdateCashId = (cashId: number) => {
         dispatch(setCashId(cashId));
     }
 
-    const moveToManage = () => { //----------------------로그인 페이지로 이동 // 이벤트 기반
-        navigate({pathname: '/my/account/manage'}, {replace:true})
+    const moveToManage = () => {
+        navigate({pathname: '/my/account/manage'}, {replace:true});
     }
 
-    return { cashState, doUpdateCashId, doCreateCash, doGetCashList, doDeleteCash, doUpdateCash, moveToManage  };
+    return {
+        cashState,
+        doUpdateCashId,
+        doCreateCash,
+        doGetCashList,
+        doDeleteCash,
+        doUpdateCash,
+        moveToManage
+    };
 }
 
 export default useCustomCash;

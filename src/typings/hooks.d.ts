@@ -30,7 +30,7 @@ export interface extractedCompanyData2 {
 export interface CustomCashHook {
   cashState: {
     cashList: Cash[];
-    cashId: string;
+    cashId: number;
   };
   doUpdateCashId: (cashId: number) => void;
   doCreateCash: (memberId: number) => Promise<Cash>;

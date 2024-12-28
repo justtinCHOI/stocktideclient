@@ -17,7 +17,6 @@ function* loginSaga(action: PayloadAction<LoginParam>): Generator<
   try {
     const response = yield call(loginPost, action.payload);
     yield put(loginSuccess(response));
-    console.log('response', response);
   } catch (error) {
     yield put(loginFailure(error));
   }

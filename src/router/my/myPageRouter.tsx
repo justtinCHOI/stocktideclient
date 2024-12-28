@@ -1,6 +1,6 @@
 import {lazy, Suspense} from "react";
 import {Navigate} from "react-router-dom";
-import accountRouter from "@router/mypage/account/accountRouter.tsx";
+import accountRouter from "@router/my/account/accountRouter.tsx";
 import {Loading} from "@router/root.tsx";
 
 const ProfitPage = lazy(() => import("@pages/my/profit/Profit"))

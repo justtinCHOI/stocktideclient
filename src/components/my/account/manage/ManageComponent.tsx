@@ -4,35 +4,23 @@ import { ContentBottom } from "@assets/css/content.tsx";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { FaTimes } from "react-icons/fa";
 import useCustomCash from "@hooks/useCustomCash.ts";
-import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
-import { AccountState } from '@typings/account';
-import { RootState } from '@/store.tsx';
 import useCustomMember from '@hooks/useCustomMember';
 
-const initAccountsState: AccountState[] = [
-    {
-        cashId: 0,
-        accountNumber: '',
-        money: 0,
-        dollar: 0,
-    },
-]
-const initAccountIdState = 0;
-
 const ManageComponent = () => {
-    const cashState = useSelector((state: RootState) => state.cashSlice);
-    const { doCreateCash, doGetCashList, doDeleteCash, doUpdateCashId } = useCustomCash();
-    const [accounts, setAccounts] = useState(initAccountsState);
-    const [accountId, setAccountId] = useState<number>(initAccountIdState);
+    const { cashState, doCreateCash, doGetCashList, doDeleteCash, doUpdateCashId } = useCustomCash();
+    const [accounts, setAccounts] = useState(cashState?.cashList || []);
+    const [accountId, setAccountId] = useState<number>( cashState?.cashId || 0);
     const { loginState } = useCustomMember();
     const memberId = loginState.memberId;
     const navigate = useNavigate(); // 수정된 부분
 
     useEffect(() => {
-        doGetCashList(memberId).then(cashList => {
-            console.log("cashList : ", cashList)
-        });
+        if (loginState.email) {
+            doGetCashList(memberId).catch(error => {
+                console.error("Failed to fetch cash list:", error);
+            });
+        }
     }, [loginState.email]);
 
     useEffect(() => {
@@ -57,11 +45,22 @@ const ManageComponent = () => {
     };
 
     const handleChargeClick = (cashId: number) => { // 수정된 부분
-        navigate(`../charge/${cashId}`);
+        navigate(`charge/${cashId}`);
     };
     const handleExchangeClick = (cashId: number) => { // 수정된 부분
-        navigate(`../exchange/${cashId}`);
+        navigate(`exchange/${cashId}`);
     };
+
+    if (!accounts || accounts.length === 0) {
+        return (
+          <AppContainer>
+              <AddButton onClick={addAccount}>
+                  계좌 추가
+              </AddButton>
+              <ContentBottom />
+          </AppContainer>
+        );
+    }
 
     return (
         <AppContainer>
