@@ -7,7 +7,7 @@ const Stock = () => {
         <>
             <StockInfoComponent/>
             <SearchCompanyComponent/>
-             <Outlet />
+            <Outlet />
         </>
     );
 }

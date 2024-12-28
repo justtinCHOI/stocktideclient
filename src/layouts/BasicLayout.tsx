@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 import styled from "styled-components";
 import BasicMenu from "@components/common/BasicMenu";
 import RapidSlider from '@components/common/RapidSliderInfo/RapidSlider';
@@ -17,9 +17,11 @@ const BasicLayout: FC = () => {
 }
 
 const Container = styled.div`
-    background-color: #f7fafc;
-    min-height: 100vh;
-    max-width: 100vw;
+    //background-color: #f7fafc;
+    background-color: red;
+    border: 5px red;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     margin: 0; /* 추가: 기본 여백 제거 */
@@ -37,21 +39,43 @@ const MainContent = styled.main`
 
 export default BasicLayout;
 
-//전체 component 구조
+// 전체 component 구조
+
+// stock
 
 // <Container>
-//     <StockInfoDiv>
-//         <Logo>StockFish</Logo>
-//     </StockInfoDiv>
 //     <MainContent>
+//         <StockInfoComponent/>
 //         <SearchCompanyComponent/>
-//         <MenuComponent menus={Menus} urls={Urls}/>
-//         <ContentBelowMenu >
-//             <OutletDiv>
-//                 <Read/>
-//             </OutletDiv>
-//         </ContentBelowMenu >
+//         <IncludeInformationDiv $top={5} >
+//             <MenuComponent menus={Menus} urls={Urls}/>
+//             <ContentBelowMenu >
+//                 <OutletDiv>
+//                     <Outlet/>
+//                 </OutletDiv>
+//             </ContentBelowMenu >
+//         </IncludeInformationDiv>
 //     </MainContent>
 //     <RapidSlider/>
 //     <BasicMenu/>
+// </Container>
+
+// welcome
+
+// <Container>
+//   <MainContent>
+//     <StockInfoHomeDiv>
+//       <WelcomeMessage></WelcomeMessage>
+//       <WelcomeLogin></WelcomeLogin>
+//       <WelcomeSearchIcon />
+//     </StockInfoHomeDiv>
+//     <IncludeInformationDiv $top={3}>
+//       <OutletDiv>
+//         <Main/>
+//         <Footer/>
+//       </OutletDiv>
+//     </IncludeInformationDiv>
+//   </MainContent>
+//   <RapidSlider/>
+//   <BasicMenu/>
 // </Container>

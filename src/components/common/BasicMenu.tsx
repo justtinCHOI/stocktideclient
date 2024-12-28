@@ -4,11 +4,11 @@ import { FC } from 'react';
 const BasicMenu: FC = () => {
     return (
         <Footer>
-            <FooterHome><Link to={'/home'}>홈</Link> </FooterHome>
+            <FooterHome><Link to={'/welcome'}>홈</Link> </FooterHome>
             <FooterNav>
                 <FooterMenu>
-                    <FooterMenuItem><Link to={'/stock/'}>국내주식</Link> </FooterMenuItem>
-                    <FooterMenuItem><Link to={'/stock/'}>해외주식</Link></FooterMenuItem>
+                    <FooterMenuItem><Link to={'/stock/domestic/'}>국내주식</Link> </FooterMenuItem>
+                    <FooterMenuItem><Link to={'/stock/overseas/'}>해외주식</Link></FooterMenuItem>
                     <FooterMenuItem><Link to={'/my/'}>마이페이지</Link></FooterMenuItem>
                 </FooterMenu>
             </FooterNav>

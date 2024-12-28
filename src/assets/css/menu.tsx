@@ -1,5 +1,3 @@
-// src/styles.js
-
 import styled from 'styled-components';
 
 export const BoxingDiv = styled.div`
