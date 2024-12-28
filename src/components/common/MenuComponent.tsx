@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { FC, useState } from 'react';
-import PropTypes from 'prop-types';
 import { StyledLink } from '@assets/css/common';
 
 interface MenuComponentProps {
@@ -57,11 +56,6 @@ const MenuComponent: FC<MenuComponentProps> = ({ menus, urls }) => {
             </SecondMenuDiv>
         </MenuContainer>
     );
-};
-
-MenuComponent.propTypes = {
-    menus: PropTypes.arrayOf(PropTypes.string).isRequired,
-    urls: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default MenuComponent;

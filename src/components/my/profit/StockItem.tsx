@@ -36,10 +36,10 @@ const StockItem: FC<StockItemProps> = ({ company }) => {
                 <StockCode>{company.code}</StockCode>
             </StockInfo>
             <StockPriceSection>
-                <StockPrice change={priceColor1}>
+                <StockPrice $change={priceColor1}>
                     {price} {priceUnit}
                 </StockPrice>
-                <StockChange change={priceColor2}>
+                <StockChange $change={priceColor2}>
                     {showChangePrice
                         ? `${changeAmount} ${priceUnit}`
                         : `${company.stockChangeRate}%`}
@@ -133,16 +133,16 @@ const StockPriceSection = styled.div`
 `;
 
 export interface ColorProps{
-    change: string;
+    $change: string;
 }
 
 const StockPrice = styled.span<ColorProps>`
   font-size: 15px;
-  color: ${(props) => props.change};
+  color: ${(props) => props.$change};
 `;
 
 const StockChange = styled.span<ColorProps>`
-  color: ${(props) => props.change};
+  color: ${(props) => props.$change};
   cursor: pointer;
   font-size: 13px;
 `;

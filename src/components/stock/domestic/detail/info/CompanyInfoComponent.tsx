@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {getOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
 import {
@@ -61,11 +60,6 @@ const CompanyInfoComponent: FC<CompanyInfoComponentProps> = ({companyId}) => {
         </Container>
     );
 }
-
-
-CompanyInfoComponent.propTypes = {
-    companyId: PropTypes.number.isRequired
-};
 
 export default CompanyInfoComponent;
 

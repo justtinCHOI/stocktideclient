@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import useGetStockInfo from '@hooks/useGetStockInfo.ts';
@@ -74,10 +73,6 @@ const BuyComponent: FC<BuyComponentProps> = ({companyId}) => {
 };
 
 export default BuyComponent;
-
-BuyComponent.propTypes = {
-    companyId: PropTypes.number
-};
 
 const Container = styled.aside`
     z-index: 1;

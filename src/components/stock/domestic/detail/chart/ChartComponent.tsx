@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import EChartsReact from "echarts-for-react";
 import useGetStockChart from "@hooks/useGetStockChart.ts";
-import PropTypes from "prop-types";
 import { FC } from 'react';
 
 const loadingText = "로딩 중 입니다...";
@@ -34,11 +33,6 @@ const ChartComponent: FC<ChartComponentProps> = ({companyId}) => {
 };
 
 export default ChartComponent;
-
-
-ChartComponent.propTypes = {
-    companyId: PropTypes.number
-};
 
 const Container = styled.div`
   position: relative;

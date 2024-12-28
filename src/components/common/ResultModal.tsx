@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { FC } from 'react';
 
 
@@ -34,11 +33,5 @@ const ResultModal: FC<ResultModalProps> = ({ title, content, callbackFn }) => {
         </div>
     );
 }
-
-ResultModal.propTypes = {
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    callbackFn: PropTypes.func.isRequired
-};
 
 export default ResultModal;

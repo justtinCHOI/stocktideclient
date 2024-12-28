@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { FC } from 'react';
 
 interface ServerData {
@@ -49,17 +48,5 @@ const  PageComponent: FC<PageComponentProps> = ({ serverData, movePage }) => {
         </div>
     );
 }
-
-PageComponent.propTypes = {
-    serverData: PropTypes.shape({
-        prev: PropTypes.bool.isRequired,
-        next: PropTypes.bool.isRequired,
-        prevPage: PropTypes.number.isRequired,
-        nextPage: PropTypes.number.isRequired,
-        current: PropTypes.number.isRequired,
-        pageNumList: PropTypes.arrayOf(PropTypes.number).isRequired,
-    }).isRequired,
-    movePage: PropTypes.func.isRequired
-};
 
 export default PageComponent;

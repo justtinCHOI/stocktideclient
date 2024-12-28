@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import {deleteOne, getOne, putOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
 import ResultModal from "@components/common/ResultModal.jsx";
-import PropTypes from "prop-types";
 import {
     Button,
     Container,
@@ -111,7 +110,4 @@ const CompanyModifyComponent: FC<CompanyModifyComponentProps> = ({companyId}) =>
     );
 }
 
-CompanyModifyComponent.propTypes = {
-    companyId: PropTypes.number.isRequired
-};
 export default CompanyModifyComponent;

@@ -4,6 +4,7 @@ import logo from '@assets/images/StockHolmImage.png';
 import useCustomMove from '@hooks/useCustomMove.ts';
 import { logoList } from '@utils/companyLogos.ts';
 import { MoveStockItemProps } from '@typings/stock';
+import { ColorProps } from '@components/my/profit/StockItem';
 
 const StockItem: FC<MoveStockItemProps> = ({ company }) => {
 
@@ -36,10 +37,10 @@ const StockItem: FC<MoveStockItemProps> = ({ company }) => {
               <StockCode>{company.code}</StockCode>
           </StockInfo>
           <StockPriceSection>
-              <StockPrice change={priceColor1}>
+              <StockPrice $change={priceColor1}>
                   {price} {priceUnit}
               </StockPrice>
-              <StockChange change={priceColor2}>
+              <StockChange $change={priceColor2}>
                   {showChangePrice
                     ? `${changeAmount} ${priceUnit}`
                     : `${company.stockChangeRate}%`}
@@ -132,17 +133,13 @@ const StockPriceSection = styled.div`
     margin-right: 10px;
 `;
 
-export interface ColorProps{
-    change: string;
-}
-
 const StockPrice = styled.span<ColorProps>`
     font-size: 15px;
-    color: ${(props) => props.change};
+    color: ${(props) => props.$change};
 `;
 
 const StockChange = styled.span<ColorProps>`
-    color: ${(props) => props.change};
+    color: ${(props) => props.$change};
     cursor: pointer;
     font-size: 13px;
 `;

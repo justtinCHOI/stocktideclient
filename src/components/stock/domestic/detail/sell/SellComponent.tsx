@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {getOne} from "@api/companyApi.js";
 import useCustomMove from "@hooks/useCustomMove.ts";
 
@@ -58,9 +57,5 @@ const makeDiv = (title: string, value: any) => (
         </div>
     </div>
 );
-
-SellComponent.propTypes = {
-    tno: PropTypes.number.isRequired
-};
 
 export default SellComponent;
