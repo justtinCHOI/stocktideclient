@@ -1,4 +1,4 @@
-export const setLocalStorage = (key: string, value: string, days: number) => {
+export const setLocalStorage = (key: string, value: any, days: number) => {
     const expires = new Date();
     expires.setUTCDate(expires.getUTCDate() + days);
 

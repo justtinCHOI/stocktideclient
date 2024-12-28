@@ -4,14 +4,14 @@
 // import useGetHoldingStock from "@hooks/useGetHoldingStock";
 // import useCompanyData from "@hooks/useCompanyData";
 // import LoginRequestIndicator from "@common/LoginRequestIndicator.jsx";
-// import useCustomLogin from "@hooks/useCustomLogin.ts";
+// import useCustomMember from "@hooks/useCustomMember.ts";
 //
 // const evaluationProfitText = "평가 수익금";
 // const profitUnit = "원";
 
 const HoldingComponent = () => {
 
-    // const isLogin = useCustomLogin();
+    // const isLogin = useCustomMember();
     //
     // // const [isMenuOpen, setMenuOpen] = useState(false);
     //

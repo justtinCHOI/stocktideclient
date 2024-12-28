@@ -4,6 +4,7 @@ import jwtAxios from "@utils/jwtUtil.tsx";
 import {API_SERVER_HOST} from "@api/memberApi.js";
 import {useParams} from "react-router";
 import { RootState } from '@/store.tsx';
+import useCustomMember from '@hooks/useCustomMember';
 
 const host = `${API_SERVER_HOST}/api/stock`;
 
@@ -13,7 +14,7 @@ const useTradeStock = () => {
     const orderType = useSelector((state: RootState) => state.stockOrderTypeSlice);
     const orderPrice = useSelector((state: RootState) => state.stockOrderPriceSlice);
     const orderVolume = useSelector((state: RootState) => state.stockOrderVolumeSlice);
-    const loginState = useSelector((state: RootState) => state.loginSlice);
+    const { loginState } = useCustomMember();
     const memberId = loginState.memberId;
 
     const queryClient = useQueryClient();

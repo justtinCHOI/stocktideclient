@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
 import jwtAxios from "@utils/jwtUtil.tsx";
 import { API_SERVER_HOST } from "@api/memberApi.js";
 import { StockHoldResponseDto } from '@typings/dto'
-import { RootState } from '@/store.tsx';
+import useCustomMember from '@hooks/useCustomMember';
 
 const host = `${API_SERVER_HOST}/api/stock`;
 
@@ -13,7 +12,7 @@ const getHoldingStock = async (memberId: number, companyId: number): Promise<Sto
 };
 
 const useGetHoldingStock = (companyId: number) => {
-    const loginState = useSelector((state: RootState) => state.loginSlice);
+    const { loginState } = useCustomMember();
     const isLogin = !!loginState.email;
     const memberId = loginState.memberId;
 

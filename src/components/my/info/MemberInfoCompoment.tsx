@@ -1,6 +1,5 @@
 import useCustomMove from "@hooks/useCustomMove.ts";
 import { FC, useEffect, useState } from 'react';
-import {useSelector} from "react-redux";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 import {
@@ -13,8 +12,8 @@ import {
     InputWrapper,
     Label
 } from "@assets/css/content.tsx";
-import { RootState } from '@/store.tsx';
 import { MemberState } from '@typings/member';
+import useCustomMember from '@hooks/useCustomMember';
 
 const initState = {
     memberId : 0,
@@ -31,7 +30,7 @@ const MemberInfoComponent: FC = () => {
     const [showPassword, setShowPassword] = useState(false)
 
     const [member, setMember] = useState<MemberState>(initState)
-    const loginInfo = useSelector((state: RootState) => state.loginSlice)
+    const { loginState: loginInfo } = useCustomMember();
 
     useEffect(() => {
         setMember({...loginInfo})

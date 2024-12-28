@@ -1,11 +1,10 @@
-import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import useGetStockInfo from '@hooks/useGetStockInfo.ts';
 import {dummyLogo, logoList} from "@utils/companyLogos.ts"
 import StockOrder from "./StockOrder.tsx";
 import LoginRequestIndicator from "@components/common/LoginRequestIndicator";
-import { RootState } from '@/store.tsx';
 import { FC } from 'react';
+import useCustomMember from '@hooks/useCustomMember';
 
 interface BuyComponentProps {
     companyId: number;
@@ -14,7 +13,7 @@ interface BuyComponentProps {
 const marketType = "코스피";
 
 const BuyComponent: FC<BuyComponentProps> = ({companyId}) => {
-    const loginState = useSelector((state: RootState) => state.loginSlice);
+    const { loginState } = useCustomMember();
     const isLogin = !!loginState.email;
 
     const {stockInfo} = useGetStockInfo(companyId);

@@ -1,20 +1,17 @@
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import useCustomLogin from "@hooks/useCustomLogin.ts";
+import useCustomMember from "@hooks/useCustomMember.ts";
 import {getAccessToken, getMemberWithAccessToken} from "@api/kakaoApi.ts";
-import {login} from "@slices/loginSlice.ts";
 import {IncludeInformationDiv, OutletDiv} from "@assets/css/menu.tsx";
+import { loginSuccess } from '@slices/memberSlice';
 
 const KakaoRedirect = () => {
-
+    const dispatch = useDispatch();
     const [searchParams] = useSearchParams()
-
-    const {moveToPath} = useCustomLogin()
-
     const authCode = searchParams.get("code") //인증코드
 
-    const dispatch = useDispatch();
+    const { moveToPath} = useCustomMember()
 
     //getKakaoLoginLink : kakaoURL -> 인가코드
     //getAccessToken : 인가코드 -> accessToken
@@ -23,8 +20,7 @@ const KakaoRedirect = () => {
         if(authCode){
             getAccessToken(authCode).then(accessToken => {
                 getMemberWithAccessToken(accessToken).then(memberInfo => {
-                    console.log("info : ", memberInfo)
-                    dispatch(login(memberInfo))
+                    dispatch(loginSuccess(memberInfo))
                     if (memberInfo) {
                         if (memberInfo.email) {
                             moveToPath("/");

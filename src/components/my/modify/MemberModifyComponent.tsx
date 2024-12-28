@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
-import useCustomLogin from "@hooks/useCustomLogin.ts";
+import useCustomMember from "@hooks/useCustomMember.ts";
 import { modifyMember, checkEmailDuplicate } from "@api/memberApi.js";
 import ResultModal from "@components/common/ResultModal.tsx";
-import {useSelector} from "react-redux";
 import {
     Button,
     Container,
@@ -15,7 +14,6 @@ import {
     InputWrapper,
     Label
 } from "@assets/css/content.tsx";
-import { RootState } from '@/store.tsx';
 import { MemberState } from '@typings/member';
 
 const initState = {
@@ -29,14 +27,14 @@ const initState = {
 const MemberModifyComponent: FC = () => {
 
     const [member, setMember] = useState<MemberState>(initState)
-    const loginInfo = useSelector((state: RootState) => state.loginSlice)
+    const { loginState: loginInfo } = useCustomMember();
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('')
     const [result, setResult] = useState<string | null>()
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    const {doLogout, moveToLogin} = useCustomLogin()
+    const {doLogout, moveToLogin} = useCustomMember()
 
     const nameInputRef = useRef<HTMLInputElement>(null);
     const emailInputRef = useRef<HTMLInputElement>(null);

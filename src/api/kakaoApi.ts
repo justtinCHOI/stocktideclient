@@ -8,7 +8,7 @@ const redirect_uri =`http://localhost:5173/member/kakao`
 
 const auth_code_path = `https://kauth.kakao.com/oauth/authorize`
 
-const access_token_url =`https://kauth.kakao.com/oauth/token` //추가
+const access_token_url =`https://kauth.kakao.com/oauth/token`
 
 //1. 인가코드 얻기
 export const getKakaoLoginLink = () => {

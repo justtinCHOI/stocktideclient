@@ -3,15 +3,13 @@ import Main from "@components/welcome/main/Main.tsx";
 import Footer from "@components/welcome/Footer.tsx";
 import styled from "styled-components";
 import {FaSearch} from "react-icons/fa";
-import {useSelector} from "react-redux";
-import useCustomLogin from "@hooks/useCustomLogin.ts";
-import { RootState } from '@/store.tsx';
+import useCustomMember from "@hooks/useCustomMember.ts";
 import { StyledLink } from '@assets/css/common';
 
 const Welcome = () => {
 
-    const loginState = useSelector((state: RootState) => state.loginSlice);
-    const {doLogout, moveToPath} = useCustomLogin()
+    const { loginState } = useCustomMember();
+    const {doLogout, moveToPath} = useCustomMember()
     const handleClickLogout = () => {
         doLogout()
         alert("로그아웃되었습니다.")
@@ -22,15 +20,15 @@ const Welcome = () => {
         <>
             <StockInfoHomeDiv>
                 <WelcomeMessage>반가워요! StockFish 입니다.</WelcomeMessage>
-                    { ! loginState.email ?
-                        <WelcomeLogin>
-                            <StyledLink to={'/member/login'}>Login</StyledLink>
-                        </WelcomeLogin>
+                    { loginState?.email ?
+                      <WelcomeLogin
+                        onClick={handleClickLogout}>
+                        Logout
+                      </WelcomeLogin>
                         :
-                        <WelcomeLogin
-                            onClick={handleClickLogout}>
-                            Logout
-                        </WelcomeLogin>
+                      <WelcomeLogin>
+                        <StyledLink to={'/member/login'}>Login</StyledLink>
+                      </WelcomeLogin>
                     }
                 <WelcomeSearchIcon />
             </StockInfoHomeDiv>

@@ -1,16 +1,17 @@
 import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import useCustomMember from '@hooks/useCustomMember';
 
 interface PrivateRouteProps {
   children: ReactNode;
 }
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
-  const isLogin = useSelector((state: RootState) => state.loginSlice.email);
+  const {isLogin, doLogout} = useCustomMember();
+
 
   if (!isLogin) {
+    doLogout();
     return <Navigate to="/member/login" replace />;
   }
 

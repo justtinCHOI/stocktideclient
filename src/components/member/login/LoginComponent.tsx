@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import useCustomLogin from "@hooks/useCustomLogin.ts";
+import useCustomMember from "@hooks/useCustomMember.ts";
 import KakaoLoginComponent from '@components/member/kakao/KakaoLoginComponent.tsx';
 import { LoginState } from '@typings/member';
 
@@ -12,7 +12,7 @@ const initState: LoginState = {
 
 const LoginComponent: FC = () => {
     const [loginParam, setLoginParam] = useState<LoginState>({ ...initState });
-    const { doLogin } = useCustomLogin();
+    const { doLogin } = useCustomMember();
     const navigate = useNavigate();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: '/' } };

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import { AccountState } from '@typings/account';
 import { RootState } from '@/store.tsx';
+import useCustomMember from '@hooks/useCustomMember';
 
 const initAccountsState: AccountState[] = [
     {
@@ -24,7 +25,7 @@ const ManageComponent = () => {
     const { doCreateCash, doGetCashList, doDeleteCash, doUpdateCashId } = useCustomCash();
     const [accounts, setAccounts] = useState(initAccountsState);
     const [accountId, setAccountId] = useState<number>(initAccountIdState);
-    const loginState = useSelector((state: RootState) => state.loginSlice);
+    const { loginState } = useCustomMember();
     const memberId = loginState.memberId;
     const navigate = useNavigate(); // 수정된 부분
 

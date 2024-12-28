@@ -1,9 +1,9 @@
-import useCustomLogin from "@hooks/useCustomLogin.ts"
+import useCustomMember from "@hooks/useCustomMember.ts"
 import { FC } from 'react';
 
 const LogoutComponent: FC = () => {
 
-  const {doLogout, moveToPath} = useCustomLogin()
+  const {doLogout, moveToPath} = useCustomMember()
 
   const handleClickLogout = () => {
 
