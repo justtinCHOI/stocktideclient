@@ -8,7 +8,7 @@ const Detail = () => {
     const { companyId } = useParams();
 
     const Menus = ['차트', '매수/매도', '상세정보', '뉴스',  '채팅' ];
-    const Urls = ['chart', 'order', 'read', 'news', 'chat', 'sell'].map((url) => `${url}/${companyId}`);
+    const Urls = ['chart', 'buy', 'sell', 'info', 'modify', 'news', 'chat'].map((url) => `${url}/${companyId}`);
 
     return (
         <IncludeInformationDiv $top={5} >

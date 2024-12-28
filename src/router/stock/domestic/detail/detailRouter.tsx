@@ -29,7 +29,7 @@ const detailRouter = () => {
             element: <Suspense fallback={Loading}><Sell/></Suspense>,
         },
         {
-            path: 'detail/:companyId',
+            path: 'info/:companyId',
             element: <Suspense fallback={Loading}><CompanyInfo/></Suspense>,
         },
         {
