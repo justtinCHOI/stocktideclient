@@ -4,6 +4,7 @@ import styled from "styled-components";
 import useCustomMember from "@hooks/useCustomMember.ts";
 import KakaoLoginComponent from '@components/member/kakao/KakaoLoginComponent.tsx';
 import { LoginState } from '@typings/member';
+import { useTranslation } from 'react-i18next';
 
 const initState: LoginState = {
     email: '',
@@ -11,6 +12,7 @@ const initState: LoginState = {
 };
 
 const LoginComponent: FC = () => {
+    const { t } = useTranslation();
     const [loginParam, setLoginParam] = useState<LoginState>({ ...initState });
     const { doLogin } = useCustomMember();
     const navigate = useNavigate();
@@ -40,31 +42,35 @@ const LoginComponent: FC = () => {
     };
 
     return (
-        <Container>
-            <InputContainer>
-                <Label>이메일</Label>
-                <Input
-                    name="email"
-                    type="text"
-                    value={loginParam.email}
-                    onChange={handleChange}
-                />
-            </InputContainer>
-            <InputContainer>
-                <Label>비밀번호</Label>
-                <Input
-                    name="password"
-                    type="password"
-                    value={loginParam.password}
-                    onChange={handleChange}
-                />
-            </InputContainer>
-            <ButtonContainer>
-                <Button onClick={handleClickLogin}>로그인</Button>
-                <Button onClick={handleClickSignin}>회원가입</Button>
-            </ButtonContainer>
-            <KakaoLoginComponent />
-        </Container>
+      <Container>
+          <InputContainer>
+              <Label>{t('login.email')}</Label>
+              <Input
+                name="email"
+                type="text"
+                value={loginParam.email}
+                onChange={handleChange}
+              />
+          </InputContainer>
+          <InputContainer>
+              <Label>{t('login.password')}</Label>
+              <Input
+                name="password"
+                type="password"
+                value={loginParam.password}
+                onChange={handleChange}
+              />
+          </InputContainer>
+          <ButtonContainer>
+              <Button onClick={handleClickLogin}>
+                  {t('login.loginButton')}
+              </Button>
+              <Button onClick={handleClickSignin}>
+                  {t('login.signupButton')}
+              </Button>
+          </ButtonContainer>
+          <KakaoLoginComponent buttonText={t('login.kakaoLogin')} />
+      </Container>
     );
 };
 

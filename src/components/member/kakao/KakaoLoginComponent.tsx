@@ -4,15 +4,18 @@ import styled from "styled-components";
 import { FC } from 'react';
 import { StyledLink } from '@assets/css/common';
 
-const KakaoLoginComponent: FC = () => {
+interface KakaoLoginComponentProps{
+  buttonText: string;
+}
 
+const KakaoLoginComponent: FC<KakaoLoginComponentProps> = ({buttonText}) => {
     const link = getKakaoLoginLink()
 
     return (
         <StyledLink to={link}>
             <KakaoButton>
                 <LogoImage src={kakaoLogo} alt="Kakao Logo"/>
-                KAKAO LOGIN
+                {buttonText}
             </KakaoButton>
         </StyledLink>
     )
