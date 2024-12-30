@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import useCustomMember from "@hooks/useCustomMember.ts";
 import KakaoLoginComponent from '@components/member/kakao/KakaoLoginComponent.tsx';
 import { LoginState } from '@typings/member';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const initState: LoginState = {
     email: '',
@@ -15,9 +15,6 @@ const LoginComponent: FC = () => {
     const { t } = useTranslation();
     const [loginParam, setLoginParam] = useState<LoginState>({ ...initState });
     const { doLogin } = useCustomMember();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { from } = location.state || { from: { pathname: '/' } };
 
     const handleChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -28,15 +25,18 @@ const LoginComponent: FC = () => {
     };
 
     const handleClickLogin = () => {
-        doLogin(loginParam).then(data => {
-            if (data.error) {
-                alert("이메일과 패스워드를 다시 확인하세요");
-            } else {
-                alert("로그인 성공");
-                navigate(from.pathname, { replace: true });
-            }
-        });
+        if (!loginParam.email) {
+            toast.warning("이메일을 입력해주세요");
+            return;
+        }
+        if (!loginParam.password) {
+            toast.warning("비밀번호를 입력해주세요");
+            return;
+        }
+
+        doLogin(loginParam).then();
     };
+
     const handleClickSignin = () => {
         //todo
     };

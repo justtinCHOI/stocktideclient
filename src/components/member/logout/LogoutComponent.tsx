@@ -6,11 +6,9 @@ const LogoutComponent: FC = () => {
   const {doLogout, moveToPath} = useCustomMember()
 
   const handleClickLogout = () => {
-
-    doLogout()
-    alert("로그아웃되었습니다.")
-    moveToPath("/")
-  }
+    doLogout();
+    moveToPath("/");
+  };
 
   return (
     <div className = "border-2 border-red-200 mt-10 m-2 p-4">

@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import styled from "styled-components";
 import BasicMenu from "@components/common/BasicMenu";
 import RapidSlider from '@components/common/RapidSliderInfo/RapidSlider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BasicLayout: FC = () => {
   return (
@@ -12,6 +14,24 @@ const BasicLayout: FC = () => {
       </MainContent>
       <RapidSlider/>
       <BasicMenu/>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        limit={3}
+        theme="colored"
+        toastStyle={{
+          backgroundColor: '#333',
+          color: 'white',
+          fontSize: '0.9rem',
+          borderRadius: '8px',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.15)',
+          minHeight: '48px'
+        }}
+      />
     </Container>
   );
 }

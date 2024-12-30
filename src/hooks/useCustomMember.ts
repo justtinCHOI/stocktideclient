@@ -5,6 +5,7 @@ import { AppDispatch, RootState, store } from '@/store.tsx';
 import { CustomLoginHook } from '@typings/hooks';
 import { LoginParam, MemberSliceState } from '@typings/member';
 import { Member } from '@typings/entity';
+import { toast } from 'react-toastify';
 
 const useCustomMember = (): CustomLoginHook => {
   const navigate = useNavigate();
@@ -15,20 +16,26 @@ const useCustomMember = (): CustomLoginHook => {
 
   const doLogin = async (loginParam: LoginParam) => {
     dispatch(loginRequest(loginParam));
-    // Saga에서 처리되는 로직을 기다림
     return new Promise((resolve) => {
       const unsubscribe = store.subscribe(() => {
         const state = store.getState().memberSlice as MemberSliceState;
         if (!state.loading) {
           unsubscribe();
+          if (state.error) {
+            toast.error("이메일과 비밀번호를 확인해주세요");
+          } else if (state.member) {
+            toast.success("로그인 성공!");
+            moveToPath('/');
+          }
           resolve(state);
         }
       });
     });
   };
 
-  const doLogout = () => { //---------------로그아웃 함수
-    dispatch(logout())
+  const doLogout = () => {
+    dispatch(logout());
+    toast.info("로그아웃되었습니다");
   }
 
   const moveToPath = (path: string) => {  //----------------페이지 이동
