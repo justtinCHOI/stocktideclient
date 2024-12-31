@@ -22,7 +22,6 @@ const App: FC = () => {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={root} />
-
       </QueryClientProvider>
     </Provider>
   );

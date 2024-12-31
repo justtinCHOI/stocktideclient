@@ -15,6 +15,7 @@ import {
     Label
 } from "@assets/css/content.tsx";
 import { MemberState } from '@typings/member';
+import { toast } from 'react-toastify';
 
 const initState = {
     memberId : 0,
@@ -133,6 +134,7 @@ const MemberModifyComponent: FC = () => {
     const closeModal = () => {
         setResult(null)
         doLogout()
+        toast.info("로그아웃되었습니다");
         moveToLogin()
     }
 

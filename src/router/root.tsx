@@ -1,7 +1,7 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
 import {lazy, Suspense} from "react";
 import stockRouter from "@router/stock/stockRouter.tsx";
-import myPageRouter from "@router/my/myPageRouter.tsx";
+import myRouter from "@router/my/myRouter.tsx";
 import memberRouter from "@router/member/memberRouter.tsx";
 import PrivateRoute from '@components/PrivateRoute.tsx';
 
@@ -62,7 +62,7 @@ const root = createBrowserRouter([
                       </Suspense>
                   </PrivateRoute>
                 ),
-                children: myPageRouter()
+                children: myRouter()
             },
             {
                 path: "member",

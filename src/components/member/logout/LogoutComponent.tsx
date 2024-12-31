@@ -1,13 +1,14 @@
 import useCustomMember from "@hooks/useCustomMember.ts"
 import { FC } from 'react';
+import { toast } from 'react-toastify';
 
 const LogoutComponent: FC = () => {
 
-  const {doLogout, moveToPath} = useCustomMember()
+  const {doLogout} = useCustomMember()
 
-  const handleClickLogout = () => {
+  const handleClickLogout = async () => {
     doLogout();
-    moveToPath("/");
+    toast.info("로그아웃되었습니다");
   };
 
   return (

@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createCash, deleteCash, getCashList, updateCash } from '@api/accountApi.js';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getLocalStorage, setLocalStorage } from '@utils/localStorageUtil.tsx';
-import { Cash } from '@typings/entity'; // localStorage 유틸리티 파일로 변경
+import { Cash } from '@typings/entity';
 
 const LOCAL_STORAGE_KEY = 'cashState';
 
@@ -19,33 +18,11 @@ export interface CashSliceState {
     error: string | null;
 }
 
-// LocalStorage에서 초기 상태를 로드
+// LocalStorage 에서 초기 상태를 로드
 const loadInitialState = () => {
     const savedState = getLocalStorage(LOCAL_STORAGE_KEY);
     return savedState !== null ? savedState : initState;
 };
-
-export const createCashAsync = createAsyncThunk('createCashAsync', async (memberId: number) => {
-    return await createCash(memberId);
-});
-
-export const getCashListAsync = createAsyncThunk('getCashListAsync', async (memberId: number) => {
-    return await getCashList(memberId);
-});
-
-export const deleteCashAsync = createAsyncThunk('deleteCashAsync', async (cashId: number) => {
-    return await deleteCash(cashId);
-});
-
-interface UpdateCashParam {
-    cashId: number;
-    money: number;
-    dollar: number;
-}
-
-export const updateCashAsync = createAsyncThunk('updateCashAsync', async ({ cashId, money, dollar }: UpdateCashParam) => {
-    return await updateCash(cashId, money, dollar);
-});
 
 const cashSlice = createSlice({
     name: 'cash',

@@ -8,9 +8,9 @@ const MemberInfoPage = lazy(() => import("@pages/my/info/MemberInfo"))
 const MemberModifyPage = lazy(() => import("@pages/my/modify/MemberModify"))
 const SettingPage = lazy(() => import("@pages/my/setting/Setting"))
 const CompanyAddPage = lazy(() => import("@pages/my/add/CompanyAdd"))
-const AccountPage = lazy(() => import("@pages/my/account/manage/Manage"))
+const AccountPage = lazy(() => import("@pages/my/account/Account"))
 
-const myPageRouter = () => {
+const myRouter = () => {
     return[
         {
             path: '',
@@ -44,4 +44,4 @@ const myPageRouter = () => {
     ]
 }
 
-export default myPageRouter
+export default myRouter

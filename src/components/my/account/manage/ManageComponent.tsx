@@ -44,11 +44,11 @@ const ManageComponent = () => {
         doUpdateCashId(cashId);
     };
 
-    const handleChargeClick = (cashId: number) => { // 수정된 부분
-        navigate(`charge/${cashId}`);
+    const handleChargeClick = (cashId: number) => {
+        navigate(`../charge/${cashId}`);
     };
-    const handleExchangeClick = (cashId: number) => { // 수정된 부분
-        navigate(`exchange/${cashId}`);
+    const handleExchangeClick = (cashId: number) => {
+        navigate(`../exchange/${cashId}`);
     };
 
     if (!accounts || accounts.length === 0) {

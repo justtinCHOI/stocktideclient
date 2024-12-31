@@ -5,14 +5,15 @@ import styled from "styled-components";
 import {FaSearch} from "react-icons/fa";
 import useCustomMember from "@hooks/useCustomMember.ts";
 import { StyledLink } from '@assets/css/common';
+import { toast } from 'react-toastify';
 
 const Welcome = () => {
 
     const { loginState } = useCustomMember();
-    const {doLogout, moveToPath} = useCustomMember()
+    const {doLogout} = useCustomMember()
     const handleClickLogout = () => {
         doLogout()
-        moveToPath("/welcome")
+        toast.info("로그아웃되었습니다");
     }
 
     return (

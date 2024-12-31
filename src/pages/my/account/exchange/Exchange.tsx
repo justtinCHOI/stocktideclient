@@ -1,11 +1,11 @@
-import ChargeComponent from '@components/my/account/charge/ChargeComponent.tsx';
 import { useParams } from 'react-router';
+import ExchangeComponent from '@components/my/account/exchange/ExchangeComponent';
 
 const Charge = () => {
     const {cashId} = useParams()
 
     return (
-      <ChargeComponent cashId={Number(cashId)}/>
+      <ExchangeComponent cashId={Number(cashId)}/>
     );
 };
 

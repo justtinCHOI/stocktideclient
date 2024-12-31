@@ -30,6 +30,7 @@ const memberSlice = createSlice({
         },
         logout: (state) => {
             removeLocalStorage("member");
+            removeLocalStorage("cashState");
             state.member = null;
             state.loading = false;
             state.error = null;

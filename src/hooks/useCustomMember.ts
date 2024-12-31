@@ -33,9 +33,8 @@ const useCustomMember = (): CustomLoginHook => {
     });
   };
 
-  const doLogout = () => {
+  const doLogout = async () => {
     dispatch(logout());
-    toast.info("로그아웃되었습니다");
   }
 
   const moveToPath = (path: string) => {  //----------------페이지 이동
