@@ -8,6 +8,7 @@ import {requestPay} from "@api/paymentApi";
 import { AccountState, ChargeProps } from '@typings/account';
 import { RootState } from '@/store.tsx';
 import { CashSliceState } from '@slices/cashSlice';
+import { toast } from 'react-toastify';
 
 const initAccountState: AccountState = {
     cashId: 0,
@@ -20,11 +21,17 @@ const ChargeComponent: React.FC<ChargeProps> = ({ cashId }) => {
     const cashState = useSelector((state: RootState) => state.cashSlice);
     const { doUpdateCash } = useCustomCash();
     const [account, setAccount] = useState<AccountState>(initAccountState);
-    const [chargeAmount, setChargeAmount] = useState<number>(0);
+    const [chargeAmount, setChargeAmount] = useState<number | undefined>(0);
+    const [chargedMoney, setChargedMoney] = useState<number>(0);
     const [isCharged, setIsCharged] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const chargedMoney = account.money ? account.money + chargeAmount: chargeAmount;
+    useEffect(() => {
+        const accountMoneyNumber = account.money || 0;
+        const chargeAmountNumber = chargeAmount || 0;
+        setChargedMoney(accountMoneyNumber + chargeAmountNumber);
+    }, [chargeAmount])
+
 
     useEffect(() => {
         const selectedAccount = cashState.cashList.find((cash: CashSliceState) => cash.cashId == cashId);
@@ -34,16 +41,31 @@ const ChargeComponent: React.FC<ChargeProps> = ({ cashId }) => {
     }, [cashState, cashId]);
 
     const handleChargeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setChargeAmount(Number(e.target.value));
+        if(!e.target.value) {
+            setChargeAmount(undefined);
+        }else{
+            setChargeAmount(Number(e.target.value));
+        }
     };
 
     const handleCharge = () => {
-        doUpdateCash(cashId, chargedMoney, 0).then(() => {
-            setIsCharged(true);
-            setChargeAmount(0);
-            alert("충전되었습니다");
-        });
-        requestPay()
+        if (chargeAmount == undefined || chargeAmount <= 0) {
+            toast.error("충전 금액을 확인해주세요");
+            return;
+        }else{
+            doUpdateCash(cashId, chargedMoney, 0).then(() => {
+                setIsCharged(true);
+                setChargeAmount(0);
+                try {
+                    requestPay();
+                    toast.success("충전되었습니다");
+                } catch (error) {
+                    toast.error("결제 모듈 초기화에 실패했습니다");
+                }
+            }).catch(() => {
+                toast.error("충전 처리 중 오류가 발생했습니다");
+            });
+        }
     };
 
     const handleManage = () => {
@@ -67,7 +89,7 @@ const ChargeComponent: React.FC<ChargeProps> = ({ cashId }) => {
                 </AccountRow>
                 <AccountRow>
                     <AccountLabel>충전 금액:</AccountLabel>
-                    <ChargeInput type="number" value={chargeAmount} onChange={handleChargeAmountChange}/>
+                    <ChargeInput type="number" value={(chargeAmount || '')} onChange={handleChargeAmountChange}/>
                 </AccountRow>
                 <AccountRow>
                     <AccountLabel>충전 후 금액:</AccountLabel>

@@ -22,9 +22,6 @@ interface PaymentSuccessResponse {
     [key: string]: any;
 }
 
-let IMP = window.IMP;
-IMP.init('imp76806111')
-
 const payBtn = document.getElementById('payBtn');
 
 if (payBtn) {
@@ -53,10 +50,14 @@ function generateUniqueNumber() {
 
 export function requestPay() {
 
-    if (!IMP) {
-        console.error('IMP not initialized');
+    if (!window.IMP) {
+        console.warn('IMP not initialized');
         return;
     }
+
+    const IMP = window.IMP;
+    IMP.init('imp76806111'); // 결제 요청 시점에 초기화
+
     let prices = document.querySelectorAll('.price');
     const amount = calculateAmount(prices);
 
@@ -65,7 +66,6 @@ export function requestPay() {
     //     amount += parseInt(price.innerText.replace(/[^0-9]/g, ''));
     // })
     //
-
 
     const buyerEmailElement = document.getElementById('email') as HTMLInputElement;
     const buyerPhoneElement = document.getElementById('phone-num') as HTMLInputElement;

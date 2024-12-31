@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState, store } from '@/store';
 import { CustomCashHook } from '@typings/hooks';
 import { Cash } from '@typings/entity';
+import { toast } from 'react-toastify';
 
 const useCustomCash = (): CustomCashHook => {
     const dispatch = useDispatch<AppDispatch>();
@@ -75,6 +76,7 @@ const useCustomCash = (): CustomCashHook => {
                 if (!state.loading) {
                     unsubscribe();
                     if (state.error) {
+                        toast.error("계좌 업데이트에 실패했습니다");
                         reject(state.error);
                     } else {
                         const updatedCash = state.cashList.find((cash: Cash) => cash.cashId === cashId);

@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import useCustomCash from "@hooks/useCustomCash.ts";
 import {useNavigate} from "react-router-dom";
 import useCustomMember from '@hooks/useCustomMember';
+import { toast } from 'react-toastify';
 
 const ManageComponent = () => {
     const { cashState, doCreateCash, doGetCashList, doDeleteCash, doUpdateCashId } = useCustomCash();
@@ -18,7 +19,7 @@ const ManageComponent = () => {
     useEffect(() => {
         if (loginState.email) {
             doGetCashList(memberId).catch(error => {
-                console.error("Failed to fetch cash list:", error);
+                toast.error("계좌 정보를 가져오는 중 오류가 발생했습니다", error);
             });
         }
     }, [loginState.email]);
@@ -29,14 +30,18 @@ const ManageComponent = () => {
     }, [cashState]);
 
     const deleteAccount = (cashId: number) => {
-        doDeleteCash(cashId).then(cashList => {
-            console.log("cashList : ", cashList)
+        doDeleteCash(cashId).then(() => {
+            toast.success("계좌가 삭제되었습니다");
+        }).catch((error) => {
+            toast.error("계좌 삭제에 실패했습니다", error);
         });
     };
 
     const addAccount = () => {
-        doCreateCash(memberId).then(cash => {
-            console.log("created Cash", cash);
+        doCreateCash(memberId).then(() => {
+            toast.success("새 계좌가 생성되었습니다");
+        }).catch((error) => {
+            toast.error("계좌 생성 중 오류가 발생했습니다", error);
         });
     };
 

@@ -7,6 +7,7 @@ import { ContentBottom } from "@assets/css/content.tsx";
 import { RootState } from '@/store.tsx';
 import { AccountState, ExchangeProps } from '@typings/account';
 import { CashSliceState } from '@slices/cashSlice.ts';
+import { toast } from 'react-toastify';
 
 const initAccountState: AccountState = {
     cashId: 0,
@@ -73,9 +74,17 @@ const ExchangeComponent: FC<ExchangeProps> = ({ cashId }) => {
 
     const handleExchange = () => {
         if (errorMessage) return;
+
+        if (exchangedMoney < 0 || exchangedDollar < 0) {
+            toast.error("환전 금액이 유효하지 않습니다");
+            return;
+        }
+
         doUpdateCash(cashId, exchangedMoney, exchangedDollar).then(() => {
             setExchangeAmount(0);
-            alert("환전되었습니다");
+            toast.success("환전되었습니다");
+        }).catch((error) => {
+            toast.error("환전 처리 중 오류가 발생했습니다", error);
         });
     };
 
